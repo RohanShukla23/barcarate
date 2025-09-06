@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarcaRate - Barcelona Transfer Evaluator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔵🔴 BarcaRate</h1>
+            <p class="subtitle">intelligent transfer evaluation for fc barcelona</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('analysis')">squad analysis</button>
+            <button class="tab-btn" onclick="showTab('player-search')">player search</button>
+            <button class="tab-btn" onclick="showTab('recommendations')">recommendations</button>
+        </nav>
+
+        <!-- squad analysis tab -->
+        <div id="analysis" class="tab-content active">
+            <section class="squad-overview">
+                <h2>current squad analysis</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>squad strength</h3>
+                        <div class="strength-list">
+                            {% for strength in analysis.strengths %}
+                            <div class="strength-item">✓ {{ strength }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>areas for improvement</h3>
+                        <div class="weakness-list">
+                            {% for weakness in analysis.weaknesses %}
+                            <div class="weakness-item">⚠ {{ weakness }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="priority-positions">
+                    <h3>transfer priorities</h3>
+                    <div class="priority-grid">
+                        {% for position in analysis.priority_positions %}
+                        <div class="priority-card" data-urgency="{{ position.urgency }}">
+                            <div class="position">{{ position.position }}</div>
+                            <div class="urgency">urgency: {{ position.urgency }}/10</div>
+                            <div class="reason">{{ position.reason }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- player search tab -->
+        <div id="player-search" class="tab-content">
+            <section class="search-section">
+                <h2>evaluate la liga player</h2>
+                
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="player-input" 
+                        placeholder="enter la liga player name..."
+                        autocomplete="off"
+                    >
+                    <div id="autocomplete-suggestions" class="suggestions"></div>
+                    <button onclick="evaluatePlayer()">evaluate transfer</button>
+                </div>
+
+                <div id="player-result" class="result-container" style="display: none;">
+                    <!-- player evaluation results will appear here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- recommendations tab -->
+        <div id="recommendations" class="tab-content">
+            <section class="recommendations-section">
+                <h2>transfer recommendations</h2>
+                <p>top-rated players to address barcelona's needs</p>
+                
+                <div id="recommendations-list" class="recommendations-grid">
+                    <div class="loading">analyzing la liga market...</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>barcarate &copy; 2025 | for entertainment purposes only</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // pass data to javascript
+        window.playerNames = {{ player_names|tojson }};
+        window.allPlayers = {{ all_players|tojson }};
+    </script>
+</body>
+</html>
