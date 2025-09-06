@@ -26,14 +26,14 @@ A comprehensive transfer evaluation tool for FC Barcelona that analyzes squad ne
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/barcarate.git
+git clone https://github.com/RohanShukla23/barcarate.git
 cd barcarate
 ```
 
 2. Create virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # on Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies:
