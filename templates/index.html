@@ -100,9 +100,9 @@
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
-        // pass data to javascript
-        window.playerNames = {{ player_names|tojson }};
-        window.allPlayers = {{ all_players|tojson }};
+        // Initialize data variables safely
+        window.playerNames = {{ player_names|tojson|safe }};
+        window.allPlayers = {{ all_players|tojson|safe }};
     </script>
 </body>
 </html>
