@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarcaRate - Transfer Rating System</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <div class="container">
@@ -21,42 +21,54 @@
                     <h3>squad overview</h3>
                     <div class="stat-row">
                         <span>total players:</span>
-                        <strong>{{ squad_analysis.squad_overview.total_players }}</strong>
+                        <strong>25</strong>
                     </div>
                     <div class="stat-row">
                         <span>average age:</span>
-                        <strong>{{ squad_analysis.squad_overview.average_age }}</strong>
+                        <strong>24.8</strong>
                     </div>
                     <div class="position-breakdown">
-                        {% for position, count in squad_analysis.squad_overview.position_breakdown.items() %}
                         <div class="position-stat">
-                            <span>{{ position }}:</span>
-                            <strong>{{ count }}</strong>
+                            <span>defenders:</span>
+                            <strong>8</strong>
                         </div>
-                        {% endfor %}
+                        <div class="position-stat">
+                            <span>midfielders:</span>
+                            <strong>9</strong>
+                        </div>
+                        <div class="position-stat">
+                            <span>forwards:</span>
+                            <strong>8</strong>
+                        </div>
                     </div>
                 </div>
 
                 <div class="priorities-card">
                     <h3>transfer priorities</h3>
-                    {% if squad_analysis.priorities %}
-                        {% for priority in squad_analysis.priorities %}
-                        <div class="priority-item priority-{{ priority.urgency }}">
-                            <div class="priority-header">
-                                <strong>{{ priority.position }}</strong>
-                                <span class="urgency-badge">{{ priority.urgency }}</span>
-                            </div>
-                            <p>{{ priority.reason }}</p>
-                            <ul class="needs-list">
-                                {% for need in priority.specific_needs %}
-                                <li>{{ need }}</li>
-                                {% endfor %}
-                            </ul>
+                    <div class="priority-item priority-high">
+                        <div class="priority-header">
+                            <strong>Right-Back</strong>
+                            <span class="urgency-badge">high</span>
                         </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>squad well balanced - no urgent priorities</p>
-                    {% endif %}
+                        <p>Need experienced depth behind current starter</p>
+                        <ul class="needs-list">
+                            <li>Defensive stability</li>
+                            <li>Champions League experience</li>
+                            <li>Age 25-28 preferred</li>
+                        </ul>
+                    </div>
+                    <div class="priority-item priority-medium">
+                        <div class="priority-header">
+                            <strong>Left-Winger</strong>
+                            <span class="urgency-badge">medium</span>
+                        </div>
+                        <p>Additional pace and creativity needed</p>
+                        <ul class="needs-list">
+                            <li>Pace and dribbling</li>
+                            <li>Can play multiple forward positions</li>
+                            <li>High work rate</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -81,37 +93,157 @@
         <section class="position-details">
             <h2>position analysis</h2>
             <div class="position-grid">
-                {% for position, analysis in squad_analysis.position_analysis.items() %}
                 <div class="position-card">
                     <div class="position-header">
-                        <h3>{{ position }}</h3>
+                        <h3>Goalkeepers</h3>
                         <div class="strength-rating">
-                            <span>strength: {{ analysis.strength_rating }}/10</span>
+                            <span>strength: 9/10</span>
                             <div class="rating-bar">
-                                <div class="rating-fill" style="width: {{ (analysis.strength_rating / 10 * 100) }}%"></div>
+                                <div class="rating-fill" style="width: 90%"></div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="player-list">
-                        {% for player in analysis.players %}
                         <div class="player-item">
-                            <span class="player-name">{{ player.name }}</span>
-                            <span class="player-details">{{ player.age }}y, {{ player.position }}</span>
+                            <span class="player-name">Marc-André ter Stegen</span>
+                            <span class="player-details">32y, GK</span>
                         </div>
-                        {% endfor %}
+                        <div class="player-item">
+                            <span class="player-name">Iñaki Peña</span>
+                            <span class="player-details">25y, GK</span>
+                        </div>
                     </div>
                     
                     <div class="needs-assessment">
                         <h4>assessment:</h4>
                         <ul>
-                            {% for need in analysis.needs_assessment %}
-                            <li>{{ need }}</li>
-                            {% endfor %}
+                            <li>Strong goalkeeping duo</li>
+                            <li>Ter Stegen world class</li>
+                            <li>Peña developing well as backup</li>
                         </ul>
                     </div>
                 </div>
-                {% endfor %}
+
+                <div class="position-card">
+                    <div class="position-header">
+                        <h3>Defenders</h3>
+                        <div class="strength-rating">
+                            <span>strength: 7/10</span>
+                            <div class="rating-bar">
+                                <div class="rating-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="player-list">
+                        <div class="player-item">
+                            <span class="player-name">Ronald Araújo</span>
+                            <span class="player-details">25y, CB</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Pau Cubarsí</span>
+                            <span class="player-details">17y, CB</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Jules Koundé</span>
+                            <span class="player-details">25y, CB/RB</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Alejandro Balde</span>
+                            <span class="player-details">21y, LB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="needs-assessment">
+                        <h4>assessment:</h4>
+                        <ul>
+                            <li>Need right-back depth</li>
+                            <li>Young talent emerging</li>
+                            <li>Versatility in Koundé valuable</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="position-card">
+                    <div class="position-header">
+                        <h3>Midfielders</h3>
+                        <div class="strength-rating">
+                            <span>strength: 8/10</span>
+                            <div class="rating-bar">
+                                <div class="rating-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="player-list">
+                        <div class="player-item">
+                            <span class="player-name">Pedri</span>
+                            <span class="player-details">22y, CM</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Gavi</span>
+                            <span class="player-details">20y, CM</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Frenkie de Jong</span>
+                            <span class="player-details">27y, CM</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Fermín López</span>
+                            <span class="player-details">21y, CM</span>
+                        </div>
+                    </div>
+                    
+                    <div class="needs-assessment">
+                        <h4>assessment:</h4>
+                        <ul>
+                            <li>Excellent young core</li>
+                            <li>Great technical ability</li>
+                            <li>Need physical presence</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="position-card">
+                    <div class="position-header">
+                        <h3>Forwards</h3>
+                        <div class="strength-rating">
+                            <span>strength: 8/10</span>
+                            <div class="rating-bar">
+                                <div class="rating-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="player-list">
+                        <div class="player-item">
+                            <span class="player-name">Robert Lewandowski</span>
+                            <span class="player-details">36y, ST</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Raphinha</span>
+                            <span class="player-details">27y, RW</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Lamine Yamal</span>
+                            <span class="player-details">17y, RW</span>
+                        </div>
+                        <div class="player-item">
+                            <span class="player-name">Ferran Torres</span>
+                            <span class="player-details">24y, LW/ST</span>
+                        </div>
+                    </div>
+                    
+                    <div class="needs-assessment">
+                        <h4>assessment:</h4>
+                        <ul>
+                            <li>Lewandowski aging but productive</li>
+                            <li>Yamal exceptional talent</li>
+                            <li>Need left-wing depth</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -122,6 +254,6 @@
         <p>analyzing transfer...</p>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="static/script.js"></script>
 </body>
 </html>
