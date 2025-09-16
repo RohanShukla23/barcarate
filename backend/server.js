@@ -7,7 +7,7 @@ const playersRoutes = require('./src/routes/players');
 const transfersRoutes = require('./src/routes/transfers');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 // middleware
 app.use(cors());
