@@ -40,7 +40,7 @@ A comprehensive transfer analysis tool for FC Barcelona that evaluates potential
    ```
 
 4. **Open your browser**
-   Navigate to `http://localhost:5000`
+   Navigate to `http://localhost:8000`
 
 That's it! The application will be running with both backend API and frontend interface.
 

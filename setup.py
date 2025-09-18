@@ -37,7 +37,7 @@ def main():
     print("\nto run the project:")
     print("1. pip install -r requirements.txt")
     print("2. python app.py")
-    print("3. open http://localhost:5000 in your browser")
+    print("3. open http://localhost:8000 in your browser")
 
 if __name__ == '__main__':
     main()
