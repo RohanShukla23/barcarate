@@ -8,7 +8,7 @@ import random
 from datetime import datetime
 from players_database import CURRENT_SQUAD, LA_LIGA_PLAYERS, get_players_by_team
 
-app = Flask(__name__, static_folder='frontend/dist')
+app = Flask(__name__, static_folder='.')
 CORS(app)
 
 class TransferAnalyzer:
@@ -360,11 +360,11 @@ def get_teams():
 # Serve frontend
 @app.route('/')
 def serve_frontend():
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('.', 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
-    return send_from_directory(app.static_folder, path)
+    return send_from_directory('.', path)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
