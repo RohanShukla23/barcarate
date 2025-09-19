@@ -654,7 +654,7 @@ def search_players():
     return jsonify(filtered_players[:30])
 
 @app.route('/api/players/by-team/<team_name>')
-def get_players_by_team(team_name):
+def get_players_by_team_route(team_name):
     """Get all players from a specific team"""
     players = get_players_by_team(team_name)
     return jsonify(players)
@@ -780,14 +780,26 @@ def get_teams():
     teams.sort()
     return jsonify(teams)
 
-# Serve frontend
+# Serve frontend from frontend directory
 @app.route('/')
 def serve_frontend():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('frontend', 'index.html')
+
+@app.route('/styles/<path:path>')
+def serve_styles(path):
+    return send_from_directory('frontend/styles', path)
+
+@app.route('/js/<path:path>')
+def serve_js(path):
+    return send_from_directory('frontend/js', path)
 
 @app.route('/<path:path>')
 def serve_static(path):
-    return send_from_directory('.', path)
+    # Try frontend directory first, fall back to root
+    try:
+        return send_from_directory('frontend', path)
+    except:
+        return send_from_directory('.', path)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
