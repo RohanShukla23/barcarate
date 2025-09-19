@@ -1,44 +1,4 @@
-function displayErrorAnalysis(errorData) {
-            const html = `
-                <div class="analysis-container slide-in-right">
-                    <div class="recommendation invalid-transfer">
-                        <strong>${errorData.recommendation}</strong><br>
-                        <small>${errorData.recommendation_desc}</small>
-                    </div>
-                    
-                    <div class="explanation-text">
-                        <strong><i class="fas fa-exclamation-circle"></i> Error:</strong> ${errorData.message}
-                    </div>
-                    
-                    <div style="text-align: center; padding: 1.5rem; background: var(--surface); border-radius: 15px; color: var(--text-secondary);">
-                        <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                        Try searching for players from other teams to analyze potential transfers.
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('transferAnalysis').innerHTML = html;
-        }
-
-        function displayAnalysis(player, analysis) {
-            // Determine rating color based on new stringent scale
-            const ratingColor = analysis.rating >= 8.5 ? 'var(--success)' : 
-                              analysis.rating >= 7.5 ? '#00cc66' :
-                              analysis.rating >= 6.5 ? 'var(--accent)' : 
-                              analysis.rating >= 5.5 ? 'var(--warning)' : 
-                              analysis.rating >= 4.0 ? '#ff8c42' :
-                              'var(--danger)';
-            
-            const recommendationClass = analysis.recommendation.toLowerCase().replace(/ /g, '-');
-            
-            let html = `
-                <div class="analysis-container slide-in-right">
-                    <div class="rating-display">
-                        <div class="rating-circle" style="--rating: ${analysis.rating}; background: conic-gradient(${ratingColor} 0deg, ${ratingColor} calc(${analysis.rating} * 38deg), var(--surface) calc(${analysis.rating} * 38deg), var(--surface) 360deg);">
-                            <div class="rating-inner">
-                                <div class="rating-score" style="color: ${ratingColor};">${analysis.rating}</div>
-                                <div class="rating-label">Transfer Rating</div>
-                                <div style="font-size: 0.7rem; color: var(--text-secondary);<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -63,6 +23,7 @@ function displayErrorAnalysis(errorData) {
             --barca-yellow: #ffcb05;
             --barca-navy: #001e33;
             --barca-light-blue: #1a66cc;
+            --barca-burgundy: #7c2529;
             
             /* Enhanced Barcelona Theme */
             --dark-bg: linear-gradient(135deg, #001122 0%, #002244 25%, #001e33 50%, #003366 75%, #004488 100%);
@@ -83,6 +44,7 @@ function displayErrorAnalysis(errorData) {
             --barca-gradient: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
             --barca-gradient-reverse: linear-gradient(135deg, var(--barca-red), var(--barca-blue));
             --gold-gradient: linear-gradient(135deg, var(--barca-yellow), #ffa500);
+            --camp-nou-gradient: linear-gradient(135deg, var(--barca-navy), var(--barca-blue), var(--barca-burgundy));
         }
 
         body {
@@ -95,7 +57,7 @@ function displayErrorAnalysis(errorData) {
             position: relative;
         }
 
-        /* Barcelona Stadium-inspired Background */
+        /* Camp Nou Stadium-inspired Background */
         body::before {
             content: '';
             position: fixed;
@@ -104,22 +66,16 @@ function displayErrorAnalysis(errorData) {
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(ellipse at top, rgba(255, 203, 5, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(165, 0, 68, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(0, 77, 152, 0.1) 0%, transparent 50%);
+                radial-gradient(ellipse at top, rgba(255, 203, 5, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom left, rgba(165, 0, 68, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(0, 77, 152, 0.12) 0%, transparent 50%),
+                repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(255, 203, 5, 0.02) 100px, rgba(255, 203, 5, 0.02) 102px);
             z-index: -2;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Animated Barcelona Crest Pattern */
-        .bg-animation {
+        /* Barcelona Crest Pattern Animation */
+        body::after {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
@@ -130,23 +86,31 @@ function displayErrorAnalysis(errorData) {
             background-image: 
                 repeating-linear-gradient(45deg, 
                     var(--barca-blue) 0px, 
-                    var(--barca-blue) 2px, 
-                    transparent 2px, 
-                    transparent 20px),
+                    var(--barca-blue) 1px, 
+                    transparent 1px, 
+                    transparent 25px),
                 repeating-linear-gradient(-45deg, 
                     var(--barca-red) 0px, 
-                    var(--barca-red) 2px, 
-                    transparent 2px, 
-                    transparent 20px);
-            animation: slide 20s linear infinite;
+                    var(--barca-red) 1px, 
+                    transparent 1px, 
+                    transparent 25px);
+            animation: crest-slide 30s linear infinite;
         }
 
-        @keyframes slide {
+        @keyframes crest-slide {
             0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(20px) translateY(20px); }
+            100% { transform: translateX(25px) translateY(25px); }
         }
 
-        /* Header */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Header with Barcelona Spirit */
         .header {
             text-align: center;
             margin-bottom: 3rem;
@@ -158,76 +122,103 @@ function displayErrorAnalysis(errorData) {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 203, 5, 0.2), rgba(0, 77, 152, 0.1), transparent);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 203, 5, 0.25), rgba(0, 77, 152, 0.15), rgba(165, 0, 68, 0.1), transparent);
             transform: translate(-50%, -50%);
             z-index: -1;
-            animation: pulse-barca 4s ease-in-out infinite;
+            animation: pulse-camp-nou 5s ease-in-out infinite;
         }
 
-        @keyframes pulse-barca {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
+        @keyframes pulse-camp-nou {
+            0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.7; }
+            33% { transform: translate(-50%, -50%) scale(1.2) rotate(120deg); opacity: 0.9; }
+            66% { transform: translate(-50%, -50%) scale(1.1) rotate(240deg); opacity: 0.8; }
         }
 
         .logo {
-            font-size: 4.5rem;
+            font-size: 4.8rem;
             font-weight: 900;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 40px rgba(255, 203, 5, 0.6);
+            text-shadow: 0 0 50px rgba(255, 203, 5, 0.8);
             position: relative;
+            letter-spacing: -2px;
         }
 
         .logo::before {
-            content: '🔵';
+            content: '⚽';
             position: absolute;
-            left: -1.2em;
-            animation: rotate-crest 6s linear infinite;
+            left: -1.5em;
+            color: var(--barca-blue);
+            animation: rotate-ball 4s ease-in-out infinite;
         }
 
         .logo::after {
-            content: '🔴';
+            content: '🏆';
             position: absolute;
-            right: -1.2em;
-            animation: rotate-crest 6s linear infinite reverse;
+            right: -1.5em;
+            color: var(--barca-yellow);
+            animation: trophy-glow 3s ease-in-out infinite alternate;
         }
 
-        @keyframes rotate-crest {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes rotate-ball {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        @keyframes trophy-glow {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.1); filter: brightness(1.3) drop-shadow(0 0 10px gold); }
         }
 
         .subtitle {
-            font-size: 1.3rem;
-            background: linear-gradient(135deg, var(--text-secondary), var(--accent));
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--text-secondary), var(--accent), var(--barca-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 500;
-            margin-bottom: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
         }
 
         .motto {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--accent);
             font-style: italic;
             margin-top: 1rem;
-            opacity: 0.8;
+            opacity: 0.9;
+            text-shadow: 0 0 15px rgba(255, 203, 5, 0.3);
+            font-weight: 500;
         }
 
-        /* Glass morphism cards with Barcelona theme */
+        .motto::before {
+            content: '"';
+            font-size: 1.5em;
+            color: var(--barca-blue);
+        }
+
+        .motto::after {
+            content: '"';
+            font-size: 1.5em;
+            color: var(--barca-red);
+        }
+
+        /* Enhanced Glass morphism with Barcelona DNA */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
+            backdrop-filter: blur(25px);
+            border: 2px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 
+                var(--shadow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 1px rgba(0, 77, 152, 0.1);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
@@ -242,29 +233,49 @@ function displayErrorAnalysis(errorData) {
             height: 100%;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 203, 5, 0.1), 
+                rgba(255, 203, 5, 0.15), 
                 rgba(0, 77, 152, 0.1),
+                rgba(165, 0, 68, 0.1),
                 transparent);
-            transition: left 0.6s ease;
+            transition: left 0.8s ease;
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--barca-gradient);
+            border-radius: 0 0 23px 23px;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
 
         .glass-card:hover::before {
             left: 100%;
         }
 
+        .glass-card:hover::after {
+            transform: scaleX(1);
+        }
+
         .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: 
                 var(--glow),
-                0 20px 40px rgba(0, 77, 152, 0.3);
+                0 25px 50px rgba(0, 77, 152, 0.4),
+                0 0 0 1px var(--accent);
             border-color: var(--accent);
+            background: rgba(255, 203, 5, 0.08);
         }
 
         /* Grid Layout */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
+            gap: 3rem;
             margin-bottom: 2rem;
         }
 
@@ -272,152 +283,228 @@ function displayErrorAnalysis(errorData) {
             grid-column: 1 / -1;
         }
 
-        /* Section Headers */
+        /* Enhanced Section Headers */
         .section-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            margin-left: 1rem;
         }
 
         .section-icon {
-            width: 55px;
-            height: 55px;
-            background: var(--barca-gradient);
-            border-radius: 18px;
+            width: 60px;
+            height: 60px;
+            background: var(--camp-nou-gradient);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: white;
-            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.4);
-            animation: icon-glow 3s ease-in-out infinite alternate;
+            box-shadow: 
+                0 6px 20px rgba(0, 77, 152, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            animation: icon-pulse 4s ease-in-out infinite alternate;
+            position: relative;
         }
 
-        @keyframes icon-glow {
-            0% { box-shadow: 0 4px 15px rgba(0, 77, 152, 0.4); }
-            100% { box-shadow: 0 4px 25px rgba(255, 203, 5, 0.6); }
+        .section-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--gold-gradient);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .section-icon:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes icon-pulse {
+            0% { box-shadow: 0 6px 20px rgba(0, 77, 152, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+            100% { box-shadow: 0 8px 30px rgba(255, 203, 5, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
         }
 
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 1px;
         }
 
-        /* Advanced Search */
+        /* Enhanced Search with Barcelona Style */
         .search-container {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 2rem;
+            background: linear-gradient(135deg, var(--surface), rgba(0, 77, 152, 0.1));
+            border-radius: 25px;
+            padding: 2.5rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 203, 5, 0.2);
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--barca-gradient);
+            border-radius: 25px 25px 0 0;
         }
 
         .search-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr auto;
-            gap: 1.2rem;
+            gap: 1.5rem;
             align-items: end;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.8rem;
         }
 
         .form-label {
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 700;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.3);
         }
 
         .modern-input {
-            background: rgba(0, 77, 152, 0.1);
-            border: 2px solid rgba(255, 203, 5, 0.2);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
+            background: rgba(0, 77, 152, 0.15);
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            border-radius: 15px;
+            padding: 1.2rem 1.5rem;
             color: var(--text-primary);
             font-size: 1rem;
             font-weight: 500;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
         }
 
         .modern-input:focus {
             outline: none;
             border-color: var(--accent);
-            background: rgba(255, 203, 5, 0.05);
-            box-shadow: 0 0 0 4px rgba(255, 203, 5, 0.15);
-            transform: translateY(-2px);
+            background: rgba(255, 203, 5, 0.1);
+            box-shadow: 
+                0 0 0 4px rgba(255, 203, 5, 0.2),
+                0 8px 25px rgba(255, 203, 5, 0.3);
+            transform: translateY(-3px);
         }
 
         .modern-input::placeholder {
             color: var(--text-secondary);
+            font-style: italic;
         }
 
         .search-btn {
-            background: var(--barca-gradient);
+            background: var(--camp-nou-gradient);
             border: none;
-            border-radius: 12px;
-            padding: 1rem 2rem;
+            border-radius: 15px;
+            padding: 1.2rem 2.5rem;
             color: white;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.4);
+            box-shadow: 
+                0 6px 20px rgba(0, 77, 152, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gold-gradient);
+            transition: left 0.5s ease;
+        }
+
+        .search-btn:hover::before {
+            left: 0;
         }
 
         .search-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 203, 5, 0.5);
-            background: var(--gold-gradient);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(255, 203, 5, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .search-btn:active {
-            transform: translateY(-1px) scale(1.02);
+            transform: translateY(-2px) scale(1.02);
         }
 
-        /* Player Cards */
+        .search-btn i {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Player Cards */
         .players-grid {
             display: grid;
-            gap: 1.2rem;
-            max-height: 550px;
+            gap: 1.5rem;
+            max-height: 600px;
             overflow-y: auto;
             padding-right: 1rem;
         }
 
         .players-grid::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         .players-grid::-webkit-scrollbar-track {
             background: var(--surface);
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         .players-grid::-webkit-scrollbar-thumb {
             background: var(--barca-gradient);
-            border-radius: 4px;
+            border-radius: 5px;
+        }
+
+        .players-grid::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-gradient);
         }
 
         .player-card {
-            background: rgba(0, 77, 152, 0.08);
-            border: 2px solid rgba(255, 203, 5, 0.15);
-            border-radius: 18px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 77, 152, 0.1), rgba(165, 0, 68, 0.05));
+            border: 2px solid rgba(255, 203, 5, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(15px);
         }
 
         .player-card::before {
@@ -427,260 +514,381 @@ function displayErrorAnalysis(errorData) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 203, 5, 0.1), transparent);
-            transition: left 0.4s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 203, 5, 0.15), rgba(0, 77, 152, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .player-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--barca-gradient);
+            border-radius: 20px 20px 0 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
         .player-card:hover::before {
             left: 100%;
         }
 
+        .player-card:hover::after {
+            transform: scaleX(1);
+        }
+
         .player-card:hover {
-            transform: translateX(8px) translateY(-4px);
+            transform: translateX(10px) translateY(-6px) scale(1.02);
             border-color: var(--accent);
             box-shadow: 
-                0 8px 25px rgba(255, 203, 5, 0.3),
-                0 4px 15px rgba(0, 77, 152, 0.2);
-            background: rgba(255, 203, 5, 0.05);
+                0 15px 40px rgba(255, 203, 5, 0.4),
+                0 8px 25px rgba(0, 77, 152, 0.3);
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.1), rgba(0, 77, 152, 0.08));
         }
 
         .player-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .player-name {
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: var(--text-primary);
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.3);
         }
 
         .player-rating {
             background: var(--gold-gradient);
             color: var(--barca-navy);
-            padding: 0.4rem 1rem;
-            border-radius: 25px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 10px rgba(255, 203, 5, 0.4);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 1rem;
+            box-shadow: 
+                0 4px 15px rgba(255, 203, 5, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(0, 77, 152, 0.3);
         }
 
         .player-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            font-size: 0.9rem;
+            gap: 1rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
         }
 
         .detail-item {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            font-weight: 500;
+            gap: 0.8rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
 
-        .detail-icon {
-            width: 18px;
-            height: 18px;
+        .detail-item:hover {
             color: var(--accent);
         }
 
-        /* Transfer Analysis */
+        .detail-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+            filter: drop-shadow(0 0 5px rgba(255, 203, 5, 0.5));
+        }
+
+        /* Enhanced Transfer Analysis */
         .analysis-container {
-            background: rgba(0, 77, 152, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 1.5rem;
-            border-left: 5px solid var(--accent);
-            border-top: 1px solid rgba(255, 203, 5, 0.2);
+            background: linear-gradient(135deg, rgba(0, 77, 152, 0.15), rgba(165, 0, 68, 0.08));
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            border-left: 6px solid var(--accent);
+            border-top: 2px solid rgba(255, 203, 5, 0.3);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        .analysis-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 203, 5, 0.2), transparent);
+            border-radius: 0 25px 0 50px;
         }
 
         .rating-display {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             position: relative;
         }
 
         .rating-circle {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            background: conic-gradient(var(--success) 0deg, var(--success) calc(var(--rating) * 36deg), var(--surface) calc(var(--rating) * 36deg), var(--surface) 360deg);
-            padding: 6px;
-            box-shadow: 0 0 30px rgba(255, 203, 5, 0.3);
+            padding: 8px;
+            box-shadow: 
+                0 0 40px rgba(255, 203, 5, 0.4),
+                inset 0 0 0 4px rgba(0, 77, 152, 0.3);
         }
 
         .rating-inner {
             width: 100%;
             height: 100%;
-            background: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg), rgba(0, 77, 152, 0.1));
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 203, 5, 0.2);
         }
 
         .rating-score {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 900;
             color: var(--text-primary);
             line-height: 1;
+            text-shadow: 0 0 20px rgba(255, 203, 5, 0.6);
         }
 
         .rating-label {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-top: 0.3rem;
         }
 
+        .rating-max {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+            font-weight: 500;
+        }
+
+        /* Enhanced Recommendations with Barcelona DNA */
         .recommendation {
             text-align: center;
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border: 2px solid;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            border: 3px solid;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .recommendation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            opacity: 0.1;
+            z-index: -1;
         }
 
         .recommendation.dream-signing {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.1));
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 255, 136, 0.15));
             border-color: var(--success);
             color: var(--success);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .recommendation.excellent-target {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.1));
             border-color: var(--success);
             color: var(--success);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
         }
 
         .recommendation.highly-recommended {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
             border-color: var(--success);
             color: var(--success);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
         }
 
         .recommendation.recommended {
-            background: linear-gradient(135deg, rgba(255, 203, 5, 0.1), rgba(255, 203, 5, 0.05));
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.15), rgba(255, 203, 5, 0.08));
             border-color: var(--accent);
             color: var(--accent);
+            box-shadow: 0 0 20px rgba(255, 203, 5, 0.3);
         }
 
         .recommendation.consider-carefully {
-            background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 149, 0, 0.05));
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.15), rgba(255, 149, 0, 0.08));
             border-color: var(--warning);
             color: var(--warning);
+            box-shadow: 0 0 20px rgba(255, 149, 0, 0.3);
         }
 
         .recommendation.questionable {
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-
-        .recommendation.not-recommended {
             background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
             border-color: var(--danger);
             color: var(--danger);
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+        }
+
+        .recommendation.not-recommended {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(255, 71, 87, 0.1));
+            border-color: var(--danger);
+            color: var(--danger);
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.4);
         }
 
         .recommendation.invalid-transfer {
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.1));
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.25), rgba(255, 0, 0, 0.15));
             border-color: #ff0000;
             color: #ff0000;
-            animation: pulse-error 2s ease-in-out infinite;
+            animation: pulse-error 2.5s ease-in-out infinite;
         }
 
         @keyframes pulse-error {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 0 40px rgba(255, 0, 0, 0.5); }
         }
 
         .analysis-breakdown {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .breakdown-item {
-            background: var(--surface);
-            padding: 1.5rem;
-            border-radius: 15px;
+            background: linear-gradient(135deg, var(--surface), rgba(0, 77, 152, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
             text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 203, 5, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 203, 5, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breakdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--barca-gradient);
+            border-radius: 20px 20px 0 0;
         }
 
         .breakdown-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 203, 5, 0.2);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 15px 30px rgba(255, 203, 5, 0.3),
+                0 0 0 2px var(--accent);
             border-color: var(--accent);
         }
 
         .breakdown-label {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--accent);
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-weight: 700;
         }
 
         .breakdown-value {
-            font-size: 1.4rem;
-            font-weight: 800;
+            font-size: 1.6rem;
+            font-weight: 900;
             color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.4);
         }
 
         .breakdown-value.negative {
             color: var(--danger);
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.4);
         }
 
         .breakdown-value.positive {
             color: var(--success);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
         }
 
         .explanation-text {
-            background: var(--surface);
-            padding: 1.8rem;
-            border-radius: 15px;
-            line-height: 1.7;
+            background: linear-gradient(135deg, var(--surface), rgba(165, 0, 68, 0.05));
+            padding: 2.5rem;
+            border-radius: 20px;
+            line-height: 1.8;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--accent);
+            margin-bottom: 2rem;
+            border-left: 6px solid var(--accent);
             font-weight: 500;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .explanation-text::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            opacity: 0.1;
         }
 
         .risk-factors {
-            background: rgba(255, 71, 87, 0.1);
-            border: 2px solid var(--danger);
-            border-radius: 15px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
+            border: 3px solid var(--danger);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(15px);
+            position: relative;
+        }
+
+        .risk-factors::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--danger), transparent);
+            border-radius: 20px 20px 0 0;
         }
 
         .risk-title {
             color: var(--danger);
-            font-weight: 700;
-            margin-bottom: 1rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1.1rem;
+            gap: 1rem;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
         }
 
         .risk-list {
@@ -689,35 +897,42 @@ function displayErrorAnalysis(errorData) {
 
         .risk-item {
             color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
             position: relative;
-            font-weight: 500;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .risk-item:hover {
+            color: var(--danger);
         }
 
         .risk-item::before {
             content: '⚠️';
             position: absolute;
             left: 0;
+            font-size: 1.2rem;
         }
 
-        /* Squad Analysis */
+        /* Enhanced Squad Analysis */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .metric-card {
-            background: var(--surface);
-            padding: 2rem;
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--surface), rgba(165, 0, 68, 0.05));
+            padding: 2.5rem;
+            border-radius: 25px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 203, 5, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 203, 5, 0.15);
+            backdrop-filter: blur(20px);
         }
 
         .metric-card::before {
@@ -726,190 +941,275 @@ function displayErrorAnalysis(errorData) {
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: var(--barca-gradient);
+            height: 6px;
+            background: var(--camp-nou-gradient);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255, 203, 5, 0.2), transparent);
+            border-radius: 50%;
         }
 
         .metric-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--glow);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 
+                var(--glow),
+                0 20px 40px rgba(0, 77, 152, 0.3);
             border-color: var(--accent);
         }
 
         .metric-value {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 203, 5, 0.5);
+            position: relative;
+            z-index: 1;
         }
 
         .metric-label {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
+            letter-spacing: 2px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
         }
 
         .weaknesses-list {
             display: grid;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .weakness-item {
-            background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 149, 0, 0.05));
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.12), rgba(255, 149, 0, 0.08));
             border: 2px solid var(--warning);
-            border-radius: 15px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            transition: all 0.3s ease;
+            gap: 2rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weakness-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 203, 5, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .weakness-item:hover::before {
+            left: 100%;
         }
 
         .weakness-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 5px 20px rgba(255, 149, 0, 0.3);
+            transform: translateX(12px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(255, 149, 0, 0.4);
             border-color: var(--accent);
         }
 
         .weakness-icon {
-            width: 45px;
-            height: 45px;
-            background: var(--warning);
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            background: var(--camp-nou-gradient);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--barca-navy);
+            color: white;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .weakness-text {
             color: var(--warning);
-            font-weight: 600;
-            font-size: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(255, 149, 0, 0.3);
         }
 
         .priority-positions {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 2rem;
-            border: 1px solid rgba(255, 203, 5, 0.2);
+            background: linear-gradient(135deg, var(--surface), rgba(0, 77, 152, 0.1));
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-top: 2.5rem;
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        .priority-positions::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--barca-gradient);
+            border-radius: 25px 25px 0 0;
         }
 
         .priority-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             color: var(--accent);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.3);
         }
 
         .priority-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .priority-tag {
-            background: var(--barca-gradient);
+            background: var(--camp-nou-gradient);
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.3);
-            transition: all 0.3s ease;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0, 77, 152, 0.4);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 203, 5, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .priority-tag:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 203, 5, 0.4);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 203, 5, 0.5);
             background: var(--gold-gradient);
+            border-color: var(--accent);
         }
 
-        /* Loading States */
+        /* Enhanced Loading States */
         .loading {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 4rem;
+            padding: 5rem;
             color: var(--text-secondary);
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--surface);
-            border-top: 4px solid var(--accent);
+            width: 60px;
+            height: 60px;
+            border: 6px solid var(--surface);
+            border-top: 6px solid var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
+            animation: spin-barca 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            margin-bottom: 2rem;
+            position: relative;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .spinner::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--barca-gradient);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        /* Error States */
+        @keyframes spin-barca {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Enhanced Error States */
         .error {
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
-            border: 2px solid var(--danger);
-            border-radius: 15px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(255, 71, 87, 0.1));
+            border: 3px solid var(--danger);
+            border-radius: 20px;
+            padding: 2rem;
             color: var(--danger);
             text-align: center;
-            font-weight: 600;
+            font-weight: 700;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(255, 71, 87, 0.3);
         }
 
-        /* Empty States */
+        /* Enhanced Empty States */
         .empty-state {
             text-align: center;
-            padding: 4rem;
+            padding: 5rem;
             color: var(--text-secondary);
         }
 
         .empty-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.6;
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 20px rgba(255, 203, 5, 0.3));
         }
 
-        /* Barcelona-themed success states */
+        .empty-state p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Barcelona Success States */
         .success-state {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
-            border: 2px solid var(--success);
-            border-radius: 15px;
-            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.1));
+            border: 3px solid var(--success);
+            border-radius: 20px;
+            padding: 2.5rem;
             text-align: center;
             color: var(--success);
+            font-weight: 700;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
 
         /* Responsive Design */
         @media (max-width: 1200px) {
             .main-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 2.5rem;
             }
             
             .search-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 1rem;
+                gap: 1.2rem;
             }
             
             .metrics-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                gap: 1.5rem;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
             }
         }
 
@@ -919,15 +1219,15 @@ function displayErrorAnalysis(errorData) {
             }
             
             .logo {
-                font-size: 3rem;
+                font-size: 3.5rem;
             }
             
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             
             .glass-card {
-                padding: 1.5rem;
+                padding: 2rem;
             }
             
             .search-grid {
@@ -940,12 +1240,12 @@ function displayErrorAnalysis(errorData) {
             }
             
             .rating-circle {
-                width: 120px;
-                height: 120px;
+                width: 140px;
+                height: 140px;
             }
             
             .rating-score {
-                font-size: 2.2rem;
+                font-size: 2.8rem;
             }
         }
 
@@ -957,86 +1257,111 @@ function displayErrorAnalysis(errorData) {
             .metrics-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .priority-list {
+                flex-direction: column;
+            }
         }
 
-        /* Animations */
+        /* Enhanced Animations */
         .fade-in {
-            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: fadeInBarca 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInBarca {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
         .slide-in-right {
-            animation: slideInRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: slideInRightBarca 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes slideInRight {
+        @keyframes slideInRightBarca {
             from {
                 opacity: 0;
-                transform: translateX(40px);
+                transform: translateX(50px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) scale(1);
             }
         }
 
-        /* Barcelona motto styling */
+        /* Barcelona Motto Enhancement */
         .barca-motto {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 77, 152, 0.9);
+            bottom: 25px;
+            right: 25px;
+            background: var(--camp-nou-gradient);
             color: var(--accent);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
             z-index: 1000;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.3);
         }
 
         .barca-motto:hover {
             opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 203, 5, 0.5);
         }
 
-        /* Custom scrollbar for the entire page */
+        /* Enhanced Custom Scrollbars */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 12px;
         }
 
         ::-webkit-scrollbar-track {
             background: var(--barca-navy);
+            border-radius: 6px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--barca-gradient);
-            border-radius: 5px;
+            background: var(--camp-nou-gradient);
+            border-radius: 6px;
+            border: 2px solid var(--barca-navy);
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gold-gradient);
         }
+
+        /* World Class Player Card Enhancement */
+        .player-card.world-class {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 77, 152, 0.05));
+        }
+
+        .player-card.elite {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.1), rgba(0, 77, 152, 0.05));
+        }
+
+        .player-card.quality {
+            border-color: var(--barca-light-blue);
+            background: linear-gradient(135deg, rgba(26, 102, 204, 0.1), rgba(0, 77, 152, 0.05));
+        }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    
     <div class="container">
         <header class="header">
             <h1 class="logo">BarcaRate</h1>
             <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer</p>
-            <p class="motto">"More than a club"</p>
+            <p class="motto">More than a club</p>
         </header>
 
         <div class="main-grid">
@@ -1050,7 +1375,7 @@ function displayErrorAnalysis(errorData) {
                 <div id="squadAnalysis">
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Analyzing squad composition...</p>
+                        <p>Analyzing squad composition for FC Barcelona...</p>
                     </div>
                 </div>
             </div>
@@ -1069,7 +1394,7 @@ function displayErrorAnalysis(errorData) {
                     <div class="search-grid">
                         <div class="form-group">
                             <label class="form-label">Player Name</label>
-                            <input type="text" id="playerSearch" class="modern-input" placeholder="Search players..." autocomplete="off">
+                            <input type="text" id="playerSearch" class="modern-input" placeholder="Search for the next Barça legend..." autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Position</label>
@@ -1104,7 +1429,7 @@ function displayErrorAnalysis(errorData) {
                 <div class="players-grid" id="playersList">
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <p>Search for players to discover transfer opportunities</p>
+                        <p>Search for players to discover the next Culé</p>
                     </div>
                 </div>
             </div>
@@ -1120,7 +1445,7 @@ function displayErrorAnalysis(errorData) {
                 <div id="transferAnalysis">
                     <div class="empty-state">
                         <div class="empty-icon">🎯</div>
-                        <p>Select a player to see detailed transfer analysis</p>
+                        <p>Select a player to analyze their Barcelona DNA</p>
                     </div>
                 </div>
             </div>
@@ -1128,7 +1453,7 @@ function displayErrorAnalysis(errorData) {
     </div>
 
     <!-- Barcelona motto -->
-    <div class="barca-motto">Visca el Barça!</div>
+    <div class="barca-motto">Visca el Barça! 💙❤️</div>
 
     <script>
         let players = [];
@@ -1184,11 +1509,11 @@ function displayErrorAnalysis(errorData) {
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.young_players}</div>
-                            <div class="metric-label">Young Players (&lt;23)</div>
+                            <div class="metric-label">Young Talents (&lt;23)</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.veteran_players}</div>
-                            <div class="metric-label">Veterans (30+)</div>
+                            <div class="metric-label">Experienced (30+)</div>
                         </div>
                     </div>
                 `;
@@ -1253,7 +1578,7 @@ function displayErrorAnalysis(errorData) {
                             <h3 class="section-title">Squad Status</h3>
                         </div>
                         <div class="success-state">
-                            ✅ Squad analysis shows no major weaknesses identified!
+                            ✅ Squad analysis shows Barcelona is in excellent shape with no major weaknesses identified!
                         </div>
                     `;
                 }
@@ -1274,7 +1599,7 @@ function displayErrorAnalysis(errorData) {
                 document.getElementById('playersList').innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <p>Enter search criteria to find players</p>
+                        <p>Enter search criteria to find potential Culés</p>
                     </div>
                 `;
                 return;
@@ -1284,7 +1609,7 @@ function displayErrorAnalysis(errorData) {
                 document.getElementById('playersList').innerHTML = `
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Searching players...</p>
+                        <p>Scouting players worldwide...</p>
                     </div>
                 `;
                 
@@ -1309,7 +1634,7 @@ function displayErrorAnalysis(errorData) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">😔</div>
-                        <p>No players found matching your criteria</p>
+                        <p>No players found matching your criteria. Try adjusting your search!</p>
                     </div>
                 `;
                 return;
@@ -1334,7 +1659,7 @@ function displayErrorAnalysis(errorData) {
                         <div class="player-header">
                             <div>
                                 <div class="player-name">${player.name}</div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.3rem;">
+                                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.4rem; font-weight: 500;">
                                     ${player.team}
                                 </div>
                             </div>
@@ -1354,8 +1679,8 @@ function displayErrorAnalysis(errorData) {
                                 <span>€${(player.value / 1000000).toFixed(1)}M</span>
                             </div>
                             <div class="detail-item">
-                                <i class="fas fa-shield-alt detail-icon"></i>
-                                <span>${player.team.split(' ').slice(-1)[0]}</span>
+                                <i class="fas fa-flag detail-icon"></i>
+                                <span>${player.nationality || 'International'}</span>
                             </div>
                         </div>
                     </div>
@@ -1372,7 +1697,7 @@ function displayErrorAnalysis(errorData) {
                 document.getElementById('transferAnalysis').innerHTML = `
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Analyzing transfer potential...</p>
+                        <p>Analyzing Barcelona DNA compatibility...</p>
                     </div>
                 `;
                 
@@ -1390,7 +1715,7 @@ function displayErrorAnalysis(errorData) {
                         return;
                     }
                 }
-                document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analyzing transfer</div>';
+                document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analyzing transfer potential</div>';
             }
         }
 
@@ -1403,12 +1728,12 @@ function displayErrorAnalysis(errorData) {
                     </div>
                     
                     <div class="explanation-text">
-                        <strong><i class="fas fa-exclamation-circle"></i> Error:</strong> ${errorData.message}
+                        <strong><i class="fas fa-exclamation-circle"></i> Notice:</strong> ${errorData.message}
                     </div>
                     
-                    <div style="text-align: center; padding: 1.5rem; background: var(--surface); border-radius: 15px; color: var(--text-secondary);">
-                        <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                        Prova de cercar jugadors d'altres equips per analitzar fitxatges potencials.
+                    <div style="text-align: center; padding: 2rem; background: var(--surface); border-radius: 20px; color: var(--text-secondary);">
+                        <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.8rem; font-size: 1.2rem;"></i>
+                        Try searching for players from other teams to analyze potential transfer opportunities for FC Barcelona.
                     </div>
                 </div>
             `;
@@ -1417,10 +1742,11 @@ function displayErrorAnalysis(errorData) {
         }
 
         function displayAnalysis(player, analysis) {
-            // Determine rating color based on new stringent scale
-            const ratingColor = analysis.rating >= 8.5 ? 'var(--success)' : 
-                              analysis.rating >= 7.5 ? '#00cc66' :
-                              analysis.rating >= 6.5 ? 'var(--accent)' : 
+            // Enhanced rating color system based on stringent Barcelona standards
+            const ratingColor = analysis.rating >= 9.0 ? '#00ff88' : 
+                              analysis.rating >= 8.5 ? '#00cc66' :
+                              analysis.rating >= 7.5 ? 'var(--accent)' : 
+                              analysis.rating >= 6.5 ? '#ffaa00' :
                               analysis.rating >= 5.5 ? 'var(--warning)' : 
                               analysis.rating >= 4.0 ? '#ff8c42' :
                               'var(--danger)';
@@ -1433,8 +1759,8 @@ function displayErrorAnalysis(errorData) {
                         <div class="rating-circle" style="--rating: ${analysis.rating}; background: conic-gradient(${ratingColor} 0deg, ${ratingColor} calc(${analysis.rating} * 38deg), var(--surface) calc(${analysis.rating} * 38deg), var(--surface) 360deg);">
                             <div class="rating-inner">
                                 <div class="rating-score" style="color: ${ratingColor};">${analysis.rating}</div>
-                                <div class="rating-label">Valoració Fitxatge</div>
-                                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.2rem;">Màx: 9.5</div>
+                                <div class="rating-label">Transfer Rating</div>
+                                <div class="rating-max">Max: 9.5</div>
                             </div>
                         </div>
                     </div>
@@ -1446,29 +1772,29 @@ function displayErrorAnalysis(errorData) {
                     
                     <div class="analysis-breakdown">
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Qualitat</div>
+                            <div class="breakdown-label">Quality</div>
                             <div class="breakdown-value ${analysis.breakdown.quality >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.quality >= 0 ? '+' : ''}${analysis.breakdown.quality}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Impacte Edat</div>
+                            <div class="breakdown-label">Age Impact</div>
                             <div class="breakdown-value ${analysis.breakdown.age_impact >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.age_impact >= 0 ? '+' : ''}${analysis.breakdown.age_impact}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Financer</div>
+                            <div class="breakdown-label">Financial</div>
                             <div class="breakdown-value ${analysis.breakdown.financial_risk >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.financial_risk >= 0 ? '+' : ''}${analysis.breakdown.financial_risk}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Necessitat Pos.</div>
+                            <div class="breakdown-label">Position Need</div>
                             <div class="breakdown-value ${analysis.breakdown.position_need >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.position_need >= 0 ? '+' : ''}${analysis.breakdown.position_need}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Especial</div>
+                            <div class="breakdown-label">Special</div>
                             <div class="breakdown-value ${analysis.breakdown.special_factors >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.special_factors >= 0 ? '+' : ''}${analysis.breakdown.special_factors}</div>
                         </div>
                     </div>
                     
                     <div class="explanation-text">
-                        <strong>Anàlisi:</strong> ${analysis.explanation}
+                        <strong><i class="fas fa-microscope"></i> Barcelona DNA Analysis:</strong> ${analysis.explanation}
                     </div>
             `;
             
@@ -1477,7 +1803,7 @@ function displayErrorAnalysis(errorData) {
                     <div class="risk-factors">
                         <div class="risk-title">
                             <i class="fas fa-exclamation-triangle"></i>
-                            Factors de Risc
+                            Risk Factors to Consider
                         </div>
                         <ul class="risk-list">
                             ${analysis.risk_factors.map(risk => `<li class="risk-item">${risk}</li>`).join('')}
@@ -1490,6 +1816,58 @@ function displayErrorAnalysis(errorData) {
             
             document.getElementById('transferAnalysis').innerHTML = html;
         }
+
+        // Enhance user experience with keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && !e.target.matches('input, textarea')) {
+                e.preventDefault();
+                document.getElementById('playerSearch').focus();
+            }
+        });
+
+        // Add Barcelona-themed loading messages
+        const loadingMessages = [
+            "Analyzing Barcelona DNA compatibility...",
+            "Checking tiki-taka potential...",
+            "Evaluating Camp Nou readiness...",
+            "Assessing Culé worthiness...",
+            "Scanning for Messi-like qualities...",
+            "Reviewing La Liga adaptation potential..."
+        ];
+
+        function getRandomLoadingMessage() {
+            return loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+        }
+
+        // Enhanced error handling with Barcelona flair
+        window.addEventListener('error', function(e) {
+            console.error('BarcaRate Error:', e.error);
+            // Optionally show user-friendly error messages
+        });
+
+        // Add smooth transitions for dynamic content
+        function fadeInElement(element) {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Initialize tooltips for better UX
+        function initializeTooltips() {
+            const elements = document.querySelectorAll('[title]');
+            elements.forEach(el => {
+                el.addEventListener('mouseenter', function() {
+                    // Custom tooltip implementation could go here
+                });
+            });
+        }
+
+        // Call initialization functions
+        setTimeout(initializeTooltips, 1000);
     </script>
 </body>
 </html>
