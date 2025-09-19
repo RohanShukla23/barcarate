@@ -1,6 +1,6 @@
-# La Liga Players Database - UPDATED for 2025-2026 Season with Current Transfers
+# La Liga player database
 
-# Barcelona Squad (Updated for 2025-26 season)
+# Barcelona
 CURRENT_SQUAD = {
     "goalkeepers": [
         {"name": "Marc-André ter Stegen", "age": 33, "rating": 86, "value": 12000000, "position": "GK", "number": 1},
@@ -35,9 +35,9 @@ CURRENT_SQUAD = {
     ]
 }
 
-# Comprehensive La Liga Database - UPDATED for 2025-26
+# comprehensive La Liga database
 LA_LIGA_PLAYERS = [
-    # FC Barcelona (Updated for 2025-26)
+    # FC Barcelona 
     {"name": "Marc-André ter Stegen", "age": 33, "rating": 86, "value": 12000000, "position": "GK", "team": "FC Barcelona"},
     {"name": "Joan Garcia", "age": 24, "rating": 83, "value": 25000000, "position": "GK", "team": "FC Barcelona"},
     {"name": "Wojciech Szczęsny", "age": 35, "rating": 78, "value": 1000000, "position": "GK", "team": "FC Barcelona"},
@@ -62,7 +62,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Marcus Rashford", "age": 27, "rating": 82, "value": 55000000, "position": "LW", "team": "FC Barcelona"},
     {"name": "Roony Bardghji", "age": 19, "rating": 70, "value": 8000000, "position": "RW", "team": "FC Barcelona"},
     
-    # Real Madrid CF (Updated - Modric and Lucas Vazquez departed, new signings added)
+    # Real Madrid CF 
     {"name": "Kylian Mbappé", "age": 26, "rating": 91, "value": 180000000, "position": "ST", "team": "Real Madrid CF"},
     {"name": "Vinícius Jr.", "age": 24, "rating": 89, "value": 150000000, "position": "LW", "team": "Real Madrid CF"},
     {"name": "Jude Bellingham", "age": 21, "rating": 87, "value": 120000000, "position": "CM", "team": "Real Madrid CF"},
@@ -80,7 +80,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Franco Mastantuono", "age": 17, "rating": 75, "value": 45000000, "position": "AM", "team": "Real Madrid CF"},
     {"name": "Brahim Díaz", "age": 25, "rating": 78, "value": 25000000, "position": "AM", "team": "Real Madrid CF"},
     
-    # Atlético Madrid (Updated - Morata departed, new signings added)
+    # Atlético Madrid 
     {"name": "Antoine Griezmann", "age": 33, "rating": 85, "value": 15000000, "position": "AM", "team": "Atlético Madrid"},
     {"name": "Julián Álvarez", "age": 25, "rating": 84, "value": 90000000, "position": "ST", "team": "Atlético Madrid"},
     {"name": "João Félix", "age": 25, "rating": 83, "value": 60000000, "position": "AM", "team": "Atlético Madrid"},
@@ -98,7 +98,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Angel Correa", "age": 29, "rating": 79, "value": 24000000, "position": "AM", "team": "Atlético Madrid"},
     {"name": "Marcos Llorente", "age": 29, "rating": 82, "value": 35000000, "position": "CM", "team": "Atlético Madrid"},
     
-    # Athletic Bilbao (Updated)
+    # Athletic Bilbao 
     {"name": "Nico Williams", "age": 22, "rating": 84, "value": 70000000, "position": "LW", "team": "Athletic Bilbao"},
     {"name": "Iñaki Williams", "age": 30, "rating": 81, "value": 20000000, "position": "ST", "team": "Athletic Bilbao"},
     {"name": "Oihan Sancet", "age": 24, "rating": 81, "value": 40000000, "position": "AM", "team": "Athletic Bilbao"},
@@ -112,7 +112,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Beñat Prados", "age": 22, "rating": 73, "value": 10000000, "position": "CM", "team": "Athletic Bilbao"},
     {"name": "Gorka Guruzeta", "age": 28, "rating": 76, "value": 12000000, "position": "ST", "team": "Athletic Bilbao"},
     
-    # Villarreal CF (Updated - Alex Baena departed to Atletico)
+    # Villarreal CF 
     {"name": "Gerard Moreno", "age": 32, "rating": 82, "value": 15000000, "position": "ST", "team": "Villarreal CF"},
     {"name": "Yeremy Pino", "age": 22, "rating": 80, "value": 40000000, "position": "RW", "team": "Villarreal CF"},
     {"name": "Dani Parejo", "age": 35, "rating": 81, "value": 3000000, "position": "CM", "team": "Villarreal CF"},
@@ -125,11 +125,10 @@ LA_LIGA_PLAYERS = [
     {"name": "Alberto Moleiro", "age": 21, "rating": 76, "value": 25000000, "position": "LW", "team": "Villarreal CF"},
     {"name": "Ayoze Pérez", "age": 31, "rating": 77, "value": 8000000, "position": "AM", "team": "Villarreal CF"},
     
-    # Real Sociedad (Updated - Zubimendi to Real Madrid)
+    # Real Sociedad 
     {"name": "Mikel Oyarzabal", "age": 27, "rating": 83, "value": 40000000, "position": "LW", "team": "Real Sociedad"},
     {"name": "Alexander Sørloth", "age": 29, "rating": 80, "value": 25000000, "position": "ST", "team": "Real Sociedad"},
     {"name": "Takefusa Kubo", "age": 23, "rating": 82, "value": 60000000, "position": "RW", "team": "Real Sociedad"},
-    {"name": "Mikel Merino", "age": 28, "rating": 82, "value": 25000000, "position": "CM", "team": "Real Sociedad"},
     {"name": "Robin Le Normand", "age": 27, "rating": 80, "value": 30000000, "position": "CB", "team": "Real Sociedad"},
     {"name": "Igor Zubeldia", "age": 27, "rating": 79, "value": 25000000, "position": "CB", "team": "Real Sociedad"},
     {"name": "Álex Remiro", "age": 29, "rating": 79, "value": 15000000, "position": "GK", "team": "Real Sociedad"},
@@ -138,7 +137,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Brais Méndez", "age": 28, "rating": 78, "value": 18000000, "position": "AM", "team": "Real Sociedad"},
     {"name": "Beñat Turrientes", "age": 22, "rating": 74, "value": 12000000, "position": "CM", "team": "Real Sociedad"},
     
-    # Real Betis (Updated - Rodri departed to Atletico, new signings)
+    # Real Betis 
     {"name": "Isco", "age": 32, "rating": 80, "value": 8000000, "position": "AM", "team": "Real Betis"},
     {"name": "Nabil Fekir", "age": 31, "rating": 81, "value": 15000000, "position": "AM", "team": "Real Betis"},
     {"name": "Giovani Lo Celso", "age": 28, "rating": 80, "value": 18000000, "position": "CM", "team": "Real Betis"},
@@ -152,25 +151,23 @@ LA_LIGA_PLAYERS = [
     {"name": "Vitor Roque", "age": 19, "rating": 76, "value": 25000000, "position": "ST", "team": "Real Betis"},
     {"name": "Chimy Ávila", "age": 30, "rating": 77, "value": 12000000, "position": "ST", "team": "Real Betis"},
     
-    # Sevilla FC (Updated)
+    # Sevilla FC 
     {"name": "Youssef En-Nesyri", "age": 27, "rating": 79, "value": 15000000, "position": "ST", "team": "Sevilla FC"},
     {"name": "Dodi Lukébakio", "age": 27, "rating": 78, "value": 18000000, "position": "RW", "team": "Sevilla FC"},
     {"name": "Suso", "age": 31, "rating": 77, "value": 8000000, "position": "RW", "team": "Sevilla FC"},
     {"name": "Boubakary Soumaré", "age": 25, "rating": 76, "value": 15000000, "position": "CM", "team": "Sevilla FC"},
     {"name": "Nemanja Gudelj", "age": 33, "rating": 76, "value": 3000000, "position": "DM", "team": "Sevilla FC"},
     {"name": "Loïc Badé", "age": 24, "rating": 77, "value": 20000000, "position": "CB", "team": "Sevilla FC"},
-    {"name": "Sergio Ramos", "age": 38, "rating": 80, "value": 2000000, "position": "CB", "team": "Sevilla FC"},
     {"name": "Ørjan Nyland", "age": 34, "rating": 74, "value": 2000000, "position": "GK", "team": "Sevilla FC"},
     {"name": "Marcos Acuña", "age": 33, "rating": 78, "value": 8000000, "position": "LB", "team": "Sevilla FC"},
     {"name": "Jesús Navas", "age": 39, "rating": 76, "value": 1000000, "position": "RB", "team": "Sevilla FC"},
     {"name": "Isaac Romero", "age": 22, "rating": 74, "value": 12000000, "position": "ST", "team": "Sevilla FC"},
     
-    # Valencia CF (Updated)
+    # Valencia CF 
     {"name": "Hugo Duro", "age": 25, "rating": 76, "value": 12000000, "position": "ST", "team": "Valencia CF"},
     {"name": "Diego López", "age": 22, "rating": 75, "value": 15000000, "position": "LW", "team": "Valencia CF"},
     {"name": "Pepelu", "age": 26, "rating": 76, "value": 12000000, "position": "CM", "team": "Valencia CF"},
     {"name": "André Almeida", "age": 24, "rating": 74, "value": 8000000, "position": "CM", "team": "Valencia CF"},
-    {"name": "Cristhian Mosquera", "age": 20, "rating": 73, "value": 8000000, "position": "CB", "team": "Valencia CF"},
     {"name": "Cenk Özkacar", "age": 23, "rating": 72, "value": 6000000, "position": "LB", "team": "Valencia CF"},
     {"name": "Giorgi Mamardashvili", "age": 24, "rating": 78, "value": 25000000, "position": "GK", "team": "Valencia CF"},
     {"name": "Thierry Correia", "age": 25, "rating": 74, "value": 8000000, "position": "RB", "team": "Valencia CF"},
@@ -178,7 +175,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Fran Pérez", "age": 21, "rating": 72, "value": 8000000, "position": "RW", "team": "Valencia CF"},
     {"name": "Rafa Mir", "age": 27, "rating": 75, "value": 10000000, "position": "ST", "team": "Valencia CF"},
     
-    # Celta Vigo (Updated)
+    # Celta Vigo 
     {"name": "Iago Aspas", "age": 37, "rating": 81, "value": 4000000, "position": "ST", "team": "Celta Vigo"},
     {"name": "Borja Iglesias", "age": 31, "rating": 77, "value": 8000000, "position": "ST", "team": "Celta Vigo"},
     {"name": "Óscar Mingueza", "age": 25, "rating": 76, "value": 12000000, "position": "RB", "team": "Celta Vigo"},
@@ -190,7 +187,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Damián Rodríguez", "age": 23, "rating": 71, "value": 3000000, "position": "CM", "team": "Celta Vigo"},
     {"name": "Williot Swedberg", "age": 20, "rating": 73, "value": 8000000, "position": "LW", "team": "Celta Vigo"},
 
-    # Getafe CF (Updated)
+    # Getafe CF 
     {"name": "Borja Mayoral", "age": 27, "rating": 76, "value": 10000000, "position": "ST", "team": "Getafe CF"},
     {"name": "Carles Aleñá", "age": 27, "rating": 75, "value": 8000000, "position": "CM", "team": "Getafe CF"},
     {"name": "Nemanja Maksimović", "age": 29, "rating": 76, "value": 8000000, "position": "CM", "team": "Getafe CF"},
@@ -202,7 +199,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Diego Rico", "age": 31, "rating": 74, "value": 4000000, "position": "LB", "team": "Getafe CF"},
     {"name": "Christantus Uche", "age": 21, "rating": 72, "value": 8000000, "position": "ST", "team": "Getafe CF"},
 
-    # CA Osasuna (Updated)
+    # CA Osasuna 
     {"name": "Ante Budimir", "age": 33, "rating": 76, "value": 3000000, "position": "ST", "team": "CA Osasuna"},
     {"name": "Rubén García", "age": 31, "rating": 75, "value": 4000000, "position": "RW", "team": "CA Osasuna"},
     {"name": "Jon Moncayola", "age": 26, "rating": 74, "value": 8000000, "position": "CM", "team": "CA Osasuna"},
@@ -214,7 +211,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Juan Cruz", "age": 27, "rating": 72, "value": 4000000, "position": "LB", "team": "CA Osasuna"},
     {"name": "Aimar Oroz", "age": 22, "rating": 75, "value": 12000000, "position": "AM", "team": "CA Osasuna"},
 
-    # UD Las Palmas (Updated)
+    # UD Las Palmas 
     {"name": "Sandro Ramírez", "age": 29, "rating": 75, "value": 6000000, "position": "ST", "team": "UD Las Palmas"},
     {"name": "Javi Muñoz", "age": 25, "rating": 73, "value": 5000000, "position": "CM", "team": "UD Las Palmas"},
     {"name": "Kirian Rodríguez", "age": 28, "rating": 74, "value": 4000000, "position": "CM", "team": "UD Las Palmas"},
@@ -226,7 +223,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Fabio González", "age": 21, "rating": 69, "value": 3000000, "position": "CM", "team": "UD Las Palmas"},
     {"name": "Adnan Januzaj", "age": 29, "rating": 76, "value": 8000000, "position": "RW", "team": "UD Las Palmas"},
 
-    # Rayo Vallecano (Updated)
+    # Rayo Vallecano 
     {"name": "Sergio Camello", "age": 24, "rating": 74, "value": 8000000, "position": "ST", "team": "Rayo Vallecano"},
     {"name": "Isi Palazón", "age": 29, "rating": 76, "value": 8000000, "position": "RW", "team": "Rayo Vallecano"},
     {"name": "Jorge de Frutos", "age": 27, "rating": 74, "value": 6000000, "position": "RW", "team": "Rayo Vallecano"},
@@ -238,7 +235,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Unai López", "age": 28, "rating": 74, "value": 5000000, "position": "CM", "team": "Rayo Vallecano"},
     {"name": "Randy Nteka", "age": 26, "rating": 73, "value": 6000000, "position": "ST", "team": "Rayo Vallecano"},
 
-    # RCD Mallorca (Updated)
+    # RCD Mallorca 
     {"name": "Cyle Larin", "age": 29, "rating": 75, "value": 6000000, "position": "ST", "team": "RCD Mallorca"},
     {"name": "Dani Rodríguez", "age": 37, "rating": 74, "value": 1000000, "position": "AM", "team": "RCD Mallorca"},
     {"name": "Samú Costa", "age": 24, "rating": 74, "value": 8000000, "position": "CM", "team": "RCD Mallorca"},
@@ -250,7 +247,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Sergi Darder", "age": 30, "rating": 76, "value": 6000000, "position": "CM", "team": "RCD Mallorca"},
     {"name": "Vedat Muriqi", "age": 30, "rating": 75, "value": 8000000, "position": "ST", "team": "RCD Mallorca"},
 
-    # Girona FC (Updated)
+    # Girona FC
     {"name": "Cristhian Stuani", "age": 38, "rating": 75, "value": 1000000, "position": "ST", "team": "Girona FC"},
     {"name": "Viktor Tsygankov", "age": 27, "rating": 78, "value": 20000000, "position": "RW", "team": "Girona FC"},
     {"name": "Aleix García", "age": 27, "rating": 77, "value": 15000000, "position": "CM", "team": "Girona FC"},
@@ -262,7 +259,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Donny van de Beek", "age": 27, "rating": 76, "value": 15000000, "position": "CM", "team": "Girona FC"},
     {"name": "Bryan Gil", "age": 23, "rating": 75, "value": 18000000, "position": "LW", "team": "Girona FC"},
 
-    # Deportivo Alavés (Updated)
+    # Deportivo Alavés 
     {"name": "Kike García", "age": 34, "rating": 74, "value": 2000000, "position": "ST", "team": "Deportivo Alavés"},
     {"name": "Luis Rioja", "age": 31, "rating": 74, "value": 3000000, "position": "LW", "team": "Deportivo Alavés"},
     {"name": "Jon Guridi", "age": 27, "rating": 73, "value": 4000000, "position": "CM", "team": "Deportivo Alavés"},
@@ -274,7 +271,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Ander Guevara", "age": 24, "rating": 70, "value": 3000000, "position": "CM", "team": "Deportivo Alavés"},
     {"name": "Tomás Conechny", "age": 19, "rating": 69, "value": 4000000, "position": "RW", "team": "Deportivo Alavés"},
 
-    # RCD Espanyol (Updated)
+    # RCD Espanyol 
     {"name": "Javi Puado", "age": 26, "rating": 74, "value": 8000000, "position": "ST", "team": "RCD Espanyol"},
     {"name": "Alejo Véliz", "age": 21, "rating": 72, "value": 6000000, "position": "ST", "team": "RCD Espanyol"},
     {"name": "Jofre Carreras", "age": 20, "rating": 70, "value": 4000000, "position": "RW", "team": "RCD Espanyol"},
@@ -286,7 +283,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Alex Král", "age": 26, "rating": 73, "value": 5000000, "position": "CM", "team": "RCD Espanyol"},
     {"name": "Walid Cheddira", "age": 26, "rating": 73, "value": 6000000, "position": "ST", "team": "RCD Espanyol"},
 
-    # CD Leganés (Updated)
+    # CD Leganés 
     {"name": "Miguel de la Fuente", "age": 25, "rating": 71, "value": 3000000, "position": "ST", "team": "CD Leganés"},
     {"name": "Seydouba Cissé", "age": 24, "rating": 70, "value": 2000000, "position": "CM", "team": "CD Leganés"},
     {"name": "Yvan Neyou", "age": 27, "rating": 71, "value": 2000000, "position": "DM", "team": "CD Leganés"},
@@ -298,7 +295,7 @@ LA_LIGA_PLAYERS = [
     {"name": "Óscar Rodríguez", "age": 26, "rating": 73, "value": 4000000, "position": "AM", "team": "CD Leganés"},
     {"name": "Munir El Haddadi", "age": 29, "rating": 74, "value": 5000000, "position": "LW", "team": "CD Leganés"},
 
-    # Real Valladolid (Updated)
+    # Real Valladolid 
     {"name": "Raúl Moro", "age": 22, "rating": 71, "value": 4000000, "position": "LW", "team": "Real Valladolid"},
     {"name": "Mamadou Sylla", "age": 25, "rating": 70, "value": 3000000, "position": "ST", "team": "Real Valladolid"},
     {"name": "Stanko Juric", "age": 21, "rating": 69, "value": 2000000, "position": "CM", "team": "Real Valladolid"},

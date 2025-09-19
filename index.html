@@ -1,4 +1,44 @@
-<!DOCTYPE html>
+function displayErrorAnalysis(errorData) {
+            const html = `
+                <div class="analysis-container slide-in-right">
+                    <div class="recommendation invalid-transfer">
+                        <strong>${errorData.recommendation}</strong><br>
+                        <small>${errorData.recommendation_desc}</small>
+                    </div>
+                    
+                    <div class="explanation-text">
+                        <strong><i class="fas fa-exclamation-circle"></i> Error:</strong> ${errorData.message}
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1.5rem; background: var(--surface); border-radius: 15px; color: var(--text-secondary);">
+                        <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                        Try searching for players from other teams to analyze potential transfers.
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('transferAnalysis').innerHTML = html;
+        }
+
+        function displayAnalysis(player, analysis) {
+            // Determine rating color based on new stringent scale
+            const ratingColor = analysis.rating >= 8.5 ? 'var(--success)' : 
+                              analysis.rating >= 7.5 ? '#00cc66' :
+                              analysis.rating >= 6.5 ? 'var(--accent)' : 
+                              analysis.rating >= 5.5 ? 'var(--warning)' : 
+                              analysis.rating >= 4.0 ? '#ff8c42' :
+                              'var(--danger)';
+            
+            const recommendationClass = analysis.recommendation.toLowerCase().replace(/ /g, '-');
+            
+            let html = `
+                <div class="analysis-container slide-in-right">
+                    <div class="rating-display">
+                        <div class="rating-circle" style="--rating: ${analysis.rating}; background: conic-gradient(${ratingColor} 0deg, ${ratingColor} calc(${analysis.rating} * 38deg), var(--surface) calc(${analysis.rating} * 38deg), var(--surface) 360deg);">
+                            <div class="rating-inner">
+                                <div class="rating-score" style="color: ${ratingColor};">${analysis.rating}</div>
+                                <div class="rating-label">Transfer Rating</div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -996,7 +1036,7 @@
         <header class="header">
             <h1 class="logo">BarcaRate</h1>
             <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer</p>
-            <p class="motto">"Més que un club" - More than a club</p>
+            <p class="motto">"More than a club"</p>
         </header>
 
         <div class="main-grid">
@@ -1005,7 +1045,7 @@
                     <div class="section-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h2 class="section-title">Anàlisi de la Plantilla</h2>
+                    <h2 class="section-title">Squad Analysis</h2>
                 </div>
                 <div id="squadAnalysis">
                     <div class="loading">
@@ -1022,37 +1062,37 @@
                     <div class="section-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <h2 class="section-title">Cerca de Jugadors</h2>
+                    <h2 class="section-title">Player Search</h2>
                 </div>
                 
                 <div class="search-container">
                     <div class="search-grid">
                         <div class="form-group">
-                            <label class="form-label">Nom del Jugador</label>
-                            <input type="text" id="playerSearch" class="modern-input" placeholder="Buscar jugadors..." autocomplete="off">
+                            <label class="form-label">Player Name</label>
+                            <input type="text" id="playerSearch" class="modern-input" placeholder="Search players..." autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Posició</label>
+                            <label class="form-label">Position</label>
                             <select id="positionFilter" class="modern-input">
-                                <option value="">Totes les Posicions</option>
-                                <option value="GK">Porter</option>
-                                <option value="CB">Defensa Central</option>
-                                <option value="LB">Lateral Esquerre</option>
-                                <option value="RB">Lateral Dret</option>
-                                <option value="DM">Migcampista Defensiu</option>
-                                <option value="CM">Migcampista Central</option>
-                                <option value="AM">Migcampista Ofensiu</option>
-                                <option value="LW">Extrem Esquerre</option>
-                                <option value="RW">Extrem Dret</option>
-                                <option value="ST">Davanter</option>
+                                <option value="">All Positions</option>
+                                <option value="GK">Goalkeeper</option>
+                                <option value="CB">Center Back</option>
+                                <option value="LB">Left Back</option>
+                                <option value="RB">Right Back</option>
+                                <option value="DM">Defensive Mid</option>
+                                <option value="CM">Central Mid</option>
+                                <option value="AM">Attacking Mid</option>
+                                <option value="LW">Left Wing</option>
+                                <option value="RW">Right Wing</option>
+                                <option value="ST">Striker</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Edat Màxima</label>
+                            <label class="form-label">Max Age</label>
                             <input type="number" id="maxAge" class="modern-input" placeholder="30" min="16" max="40">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Valoració Mín.</label>
+                            <label class="form-label">Min Rating</label>
                             <input type="number" id="minRating" class="modern-input" placeholder="75" min="60" max="95">
                         </div>
                         <button class="search-btn" onclick="searchPlayers()">
@@ -1064,7 +1104,7 @@
                 <div class="players-grid" id="playersList">
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <p>Cerca jugadors per descobrir oportunitats de fitxatge</p>
+                        <p>Search for players to discover transfer opportunities</p>
                     </div>
                 </div>
             </div>
@@ -1074,13 +1114,13 @@
                     <div class="section-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h2 class="section-title">Anàlisi de Fitxatge</h2>
+                    <h2 class="section-title">Transfer Analysis</h2>
                 </div>
                 
                 <div id="transferAnalysis">
                     <div class="empty-state">
                         <div class="empty-icon">🎯</div>
-                        <p>Selecciona un jugador per veure l'anàlisi detallada</p>
+                        <p>Select a player to see detailed transfer analysis</p>
                     </div>
                 </div>
             </div>
@@ -1128,23 +1168,23 @@
                     <div class="metrics-grid fade-in">
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.total_players}</div>
-                            <div class="metric-label">Mida de la Plantilla</div>
+                            <div class="metric-label">Squad Size</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.average_age}</div>
-                            <div class="metric-label">Edat Mitjana</div>
+                            <div class="metric-label">Average Age</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.average_rating}</div>
-                            <div class="metric-label">Valoració Mitjana</div>
+                            <div class="metric-label">Average Rating</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">€${(analysis.metrics.total_value / 1000000).toFixed(0)}M</div>
-                            <div class="metric-label">Valor Total</div>
+                            <div class="metric-label">Total Value</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.young_players}</div>
-                            <div class="metric-label">Jugadors Joves (&lt;23)</div>
+                            <div class="metric-label">Young Players (&lt;23)</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.veteran_players}</div>
@@ -1158,7 +1198,7 @@
                         <div class="priority-positions">
                             <div class="priority-title">
                                 <i class="fas fa-target"></i>
-                                Posicions Prioritàries per Fitxar
+                                Transfer Priority Positions
                             </div>
                             <div class="priority-list">
                                 ${analysis.priority_positions.map(pos => `<div class="priority-tag">${pos}</div>`).join('')}
@@ -1173,7 +1213,7 @@
                             <div class="section-icon">
                                 <i class="fas fa-exclamation-triangle"></i>
                             </div>
-                            <h3 class="section-title">Àrees de Millora</h3>
+                            <h3 class="section-title">Areas for Improvement</h3>
                         </div>
                         <div class="weaknesses-list fade-in">
                     `;
@@ -1210,17 +1250,17 @@
                             <div class="section-icon" style="background: var(--success);">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <h3 class="section-title">Estat de la Plantilla</h3>
+                            <h3 class="section-title">Squad Status</h3>
                         </div>
                         <div class="success-state">
-                            ✅ L'anàlisi de la plantilla no mostra debilitats importants!
+                            ✅ Squad analysis shows no major weaknesses identified!
                         </div>
                     `;
                 }
 
                 document.getElementById('squadAnalysis').innerHTML = html;
             } catch (error) {
-                document.getElementById('squadAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error carregant l\'anàlisi de la plantilla</div>';
+                document.getElementById('squadAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error loading squad analysis</div>';
             }
         }
 
@@ -1234,7 +1274,7 @@
                 document.getElementById('playersList').innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <p>Introdueix criteris de cerca per trobar jugadors</p>
+                        <p>Enter search criteria to find players</p>
                     </div>
                 `;
                 return;
@@ -1244,7 +1284,7 @@
                 document.getElementById('playersList').innerHTML = `
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Cercant jugadors...</p>
+                        <p>Searching players...</p>
                     </div>
                 `;
                 
@@ -1258,7 +1298,7 @@
                 players = response.data;
                 displayPlayers(players);
             } catch (error) {
-                document.getElementById('playersList').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error cercant jugadors</div>';
+                document.getElementById('playersList').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error searching players</div>';
             }
         }
 
@@ -1269,7 +1309,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">😔</div>
-                        <p>No s'han trobat jugadors que coincideixin amb els teus criteris</p>
+                        <p>No players found matching your criteria</p>
                     </div>
                 `;
                 return;
@@ -1307,7 +1347,7 @@
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-birthday-cake detail-icon"></i>
-                                <span>${player.age} anys</span>
+                                <span>${player.age} years</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-euro-sign detail-icon"></i>
@@ -1332,7 +1372,7 @@
                 document.getElementById('transferAnalysis').innerHTML = `
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Analitzant potencial de fitxatge...</p>
+                        <p>Analyzing transfer potential...</p>
                     </div>
                 `;
                 
@@ -1350,7 +1390,7 @@
                         return;
                     }
                 }
-                document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analitzant el fitxatge</div>';
+                document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analyzing transfer</div>';
             }
         }
 
