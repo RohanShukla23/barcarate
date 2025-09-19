@@ -7,9 +7,23 @@ import math
 import random
 from datetime import datetime
 from players_database import CURRENT_SQUAD, LA_LIGA_PLAYERS, get_players_by_team
+import unicodedata
 
 app = Flask(__name__, static_folder='.')
 CORS(app)
+
+def normalize_string(text: str) -> str:
+    """
+    Normalize string by removing accents and converting to lowercase
+    """
+    if not text:
+        return ""
+    
+    # Normalize unicode characters and remove accents
+    normalized = unicodedata.normalize('NFD', text)
+    # Filter out combining characters (accents)
+    ascii_text = ''.join(c for c in normalized if unicodedata.category(c) != 'Mn')
+    return ascii_text.lower()
 
 class TransferAnalyzer:
     def __init__(self):
@@ -600,7 +614,7 @@ def get_squad():
 
 @app.route('/api/players/search')
 def search_players():
-    """Search La Liga players for transfers with advanced filtering"""
+    """Search La Liga players for transfers with advanced filtering and accent-insensitive search"""
     query = request.args.get('q', '').lower()
     position = request.args.get('position', '').upper()
     team = request.args.get('team', '')
@@ -610,9 +624,13 @@ def search_players():
     
     filtered_players = LA_LIGA_PLAYERS.copy()
     
-    # Apply filters
+    # Apply filters with accent-insensitive search for names
     if query:
-        filtered_players = [p for p in filtered_players if query in p["name"].lower()]
+        normalized_query = normalize_string(query)
+        filtered_players = [
+            p for p in filtered_players 
+            if normalized_query in normalize_string(p["name"])
+        ]
     
     if position:
         filtered_players = [p for p in filtered_players if p["position"] == position]
