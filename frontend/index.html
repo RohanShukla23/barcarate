@@ -4,13 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarcaRate - FC Barcelona Transfer Analyzer</title>
+    
+    <!-- External Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- CSS Modules in Correct Order -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/player-components.css">
+    <link rel="stylesheet" href="styles/analysis.css">
+    
+    <style>
+        /* Critical CSS fixes for immediate loading */
+        :root {
+            --barca-blue: #004d98;
+            --barca-red: #a50044;
+            --barca-yellow: #ffcb05;
+            --barca-navy: #001e33;
+            --barca-light-blue: #1a66cc;
+            --barca-burgundy: #7c2529;
+            
+            --dark-bg: linear-gradient(135deg, #001122 0%, #002244 25%, #001e33 50%, #003366 75%, #004488 100%);
+            --card-bg: rgba(0, 77, 152, 0.08);
+            --surface: rgba(0, 77, 152, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: #b4c1d6;
+            --accent: var(--barca-yellow);
+            --success: #00ff88;
+            --warning: #ff9500;
+            --danger: #ff4757;
+            --glass-bg: rgba(255, 203, 5, 0.05);
+            --glass-border: rgba(255, 203, 5, 0.15);
+            --shadow: 0 8px 32px rgba(0, 77, 152, 0.4);
+            --glow: 0 0 30px rgba(255, 203, 5, 0.4);
+            
+            --barca-gradient: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
+            --gold-gradient: linear-gradient(135deg, var(--barca-yellow), #ffa500);
+            --camp-nou-gradient: linear-gradient(135deg, var(--barca-navy), var(--barca-blue), var(--barca-burgundy));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Ensure CSS loading indicator */
+        .css-loading-check {
+            display: none;
+        }
+        
+        /* Fallback styles if external CSS fails */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 2px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(0, 77, 152, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 4.8rem;
+            font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 50px rgba(255, 203, 5, 0.8);
+            position: relative;
+            letter-spacing: -2px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--text-secondary), var(--accent), var(--barca-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .motto {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-style: italic;
+            margin-top: 1rem;
+            opacity: 0.9;
+            text-shadow: 0 0 15px rgba(255, 203, 5, 0.3);
+            font-weight: 500;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--camp-nou-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 77, 152, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .glass-card {
+                padding: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="css-loading-check"></div>
+    
     <div class="container">
         <header class="header">
             <h1 class="logo">BarcaRate</h1>
@@ -109,9 +297,63 @@
     <!-- Barcelona motto -->
     <div class="barca-motto">Visca el Barça! 💙❤️</div>
 
+    <!-- JavaScript Modules -->
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/app.js"></script>
+    
+    <script>
+        // CSS loading verification and fallback
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if external CSS loaded properly
+            const checkElement = document.querySelector('.css-loading-check');
+            const computedStyle = window.getComputedStyle(checkElement);
+            
+            if (computedStyle.display !== 'none') {
+                console.warn('External CSS files may not have loaded properly');
+            }
+            
+            // Add loading states and animations
+            const elements = document.querySelectorAll('.glass-card, .header');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(40px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+            
+            // Enhanced hover effects for cards
+            document.querySelectorAll('.glass-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    this.style.boxShadow = '0 25px 50px rgba(0, 77, 152, 0.4), 0 0 30px rgba(255, 203, 5, 0.4)';
+                    this.style.borderColor = 'var(--accent)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = '0 8px 32px rgba(0, 77, 152, 0.4)';
+                    this.style.borderColor = 'rgba(255, 203, 5, 0.15)';
+                });
+            });
+        });
+        
+        // Global functions for onclick handlers
+        function searchPlayers() {
+            if (window.app) {
+                window.app.searchPlayers();
+            }
+        }
+        
+        function analyzeTransfer(playerIndex) {
+            if (window.app) {
+                window.app.analyzeTransfer(playerIndex);
+            }
+        }
+    </script>
 </body>
 </html>
