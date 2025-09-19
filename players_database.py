@@ -1,42 +1,67 @@
-# La Liga Players Database with updated market values from Transfermarkt (2024-2025)
+# La Liga Players Database with updated market values from Transfermarkt (2025-2026)
 
-# Barcelona Squad (Updated values)
+# Barcelona Squad (Updated for 2025-26 season)
 CURRENT_SQUAD = {
     "goalkeepers": [
-        {"name": "Marc-André ter Stegen", "age": 32, "rating": 86, "value": 25000000, "position": "GK"},
-        {"name": "Iñaki Peña", "age": 25, "rating": 74, "value": 8000000, "position": "GK"},
-        {"name": "Wojciech Szczęsny", "age": 34, "rating": 78, "value": 2000000, "position": "GK"}
+        {"name": "Marc-André ter Stegen", "age": 33, "rating": 86, "value": 12000000, "position": "GK", "number": 1},
+        {"name": "Joan Garcia", "age": 24, "rating": 83, "value": 25000000, "position": "GK", "number": 13},
+        {"name": "Wojciech Szczęsny", "age": 35, "rating": 78, "value": 1000000, "position": "GK", "number": 25}
     ],
     "defenders": [
-        {"name": "Alejandro Balde", "age": 21, "rating": 82, "value": 50000000, "position": "LB"},
-        {"name": "Ronald Araújo", "age": 25, "rating": 85, "value": 70000000, "position": "CB"},
-        {"name": "Pau Cubarsi", "age": 17, "rating": 78, "value": 25000000, "position": "CB"},
-        {"name": "Andreas Christensen", "age": 28, "rating": 80, "value": 30000000, "position": "CB"},
-        {"name": "Gerard Martín", "age": 22, "rating": 70, "value": 5000000, "position": "LB"},
-        {"name": "Jules Koundé", "age": 25, "rating": 84, "value": 55000000, "position": "RB"},
-        {"name": "Eric García", "age": 23, "rating": 75, "value": 15000000, "position": "CB"},
-        {"name": "Hector Fort", "age": 18, "rating": 68, "value": 3000000, "position": "RB"}
+        {"name": "Alejandro Balde", "age": 21, "rating": 82, "value": 50000000, "position": "LB", "number": 3},
+        {"name": "Ronald Araújo", "age": 26, "rating": 85, "value": 70000000, "position": "CB", "number": 4},
+        {"name": "Pau Cubarsi", "age": 18, "rating": 78, "value": 25000000, "position": "CB", "number": 5},
+        {"name": "Andreas Christensen", "age": 29, "rating": 80, "value": 30000000, "position": "CB", "number": 15},
+        {"name": "Gerard Martín", "age": 23, "rating": 70, "value": 5000000, "position": "LB", "number": 18},
+        {"name": "Jules Koundé", "age": 26, "rating": 84, "value": 55000000, "position": "RB", "number": 23},
+        {"name": "Eric García", "age": 24, "rating": 75, "value": 15000000, "position": "CB", "number": 24}
     ],
     "midfielders": [
-        {"name": "Gavi", "age": 20, "rating": 85, "value": 80000000, "position": "CM"},
-        {"name": "Pedri", "age": 22, "rating": 88, "value": 100000000, "position": "AM"},
-        {"name": "Fermín López", "age": 21, "rating": 78, "value": 25000000, "position": "CM"},
-        {"name": "Marc Casadó", "age": 21, "rating": 75, "value": 15000000, "position": "DM"},
-        {"name": "Dani Olmo", "age": 26, "rating": 85, "value": 60000000, "position": "AM"},
-        {"name": "Frenkie de Jong", "age": 27, "rating": 86, "value": 70000000, "position": "CM"},
-        {"name": "Pablo Torre", "age": 21, "rating": 72, "value": 8000000, "position": "AM"}
+        {"name": "Gavi", "age": 21, "rating": 85, "value": 80000000, "position": "CM", "number": 6},
+        {"name": "Pedri", "age": 22, "rating": 88, "value": 100000000, "position": "AM", "number": 8},
+        {"name": "Fermín López", "age": 22, "rating": 78, "value": 25000000, "position": "CM", "number": 16},
+        {"name": "Marc Casadó", "age": 22, "rating": 75, "value": 15000000, "position": "DM", "number": 17},
+        {"name": "Dani Olmo", "age": 27, "rating": 85, "value": 60000000, "position": "AM", "number": 20},
+        {"name": "Frenkie de Jong", "age": 28, "rating": 86, "value": 70000000, "position": "CM", "number": 21},
+        {"name": "Marc Bernal", "age": 18, "rating": 72, "value": 8000000, "position": "DM", "number": 22}
     ],
     "forwards": [
-        {"name": "Ferran Torres", "age": 24, "rating": 80, "value": 35000000, "position": "RW"},
-        {"name": "Robert Lewandowski", "age": 36, "rating": 87, "value": 15000000, "position": "ST"},
-        {"name": "Lamine Yamal", "age": 17, "rating": 85, "value": 180000000, "position": "RW"},
-        {"name": "Raphinha", "age": 27, "rating": 84, "value": 60000000, "position": "LW"},
-        {"name": "Ansu Fati", "age": 22, "rating": 79, "value": 25000000, "position": "LW"}
+        {"name": "Ferran Torres", "age": 25, "rating": 80, "value": 35000000, "position": "RW", "number": 7},
+        {"name": "Robert Lewandowski", "age": 37, "rating": 87, "value": 15000000, "position": "ST", "number": 9},
+        {"name": "Lamine Yamal", "age": 18, "rating": 85, "value": 180000000, "position": "RW", "number": 10},
+        {"name": "Raphinha", "age": 28, "rating": 84, "value": 60000000, "position": "LW", "number": 11},
+        {"name": "Marcus Rashford", "age": 27, "rating": 82, "value": 55000000, "position": "LW", "number": 14},
+        {"name": "Roony Bardghji", "age": 19, "rating": 70, "value": 8000000, "position": "RW", "number": 28}
     ]
 }
 
 # Comprehensive La Liga Database
 LA_LIGA_PLAYERS = [
+    # FC Barcelona (Updated for 2025-26)
+    {"name": "Marc-André ter Stegen", "age": 33, "rating": 86, "value": 12000000, "position": "GK", "team": "FC Barcelona"},
+    {"name": "Joan Garcia", "age": 24, "rating": 83, "value": 25000000, "position": "GK", "team": "FC Barcelona"},
+    {"name": "Wojciech Szczęsny", "age": 35, "rating": 78, "value": 1000000, "position": "GK", "team": "FC Barcelona"},
+    {"name": "Alejandro Balde", "age": 21, "rating": 82, "value": 50000000, "position": "LB", "team": "FC Barcelona"},
+    {"name": "Ronald Araújo", "age": 26, "rating": 85, "value": 70000000, "position": "CB", "team": "FC Barcelona"},
+    {"name": "Pau Cubarsi", "age": 18, "rating": 78, "value": 25000000, "position": "CB", "team": "FC Barcelona"},
+    {"name": "Andreas Christensen", "age": 29, "rating": 80, "value": 30000000, "position": "CB", "team": "FC Barcelona"},
+    {"name": "Gerard Martín", "age": 23, "rating": 70, "value": 5000000, "position": "LB", "team": "FC Barcelona"},
+    {"name": "Jules Koundé", "age": 26, "rating": 84, "value": 55000000, "position": "RB", "team": "FC Barcelona"},
+    {"name": "Eric García", "age": 24, "rating": 75, "value": 15000000, "position": "CB", "team": "FC Barcelona"},
+    {"name": "Gavi", "age": 21, "rating": 85, "value": 80000000, "position": "CM", "team": "FC Barcelona"},
+    {"name": "Pedri", "age": 22, "rating": 88, "value": 100000000, "position": "AM", "team": "FC Barcelona"},
+    {"name": "Fermín López", "age": 22, "rating": 78, "value": 25000000, "position": "CM", "team": "FC Barcelona"},
+    {"name": "Marc Casadó", "age": 22, "rating": 75, "value": 15000000, "position": "DM", "team": "FC Barcelona"},
+    {"name": "Dani Olmo", "age": 27, "rating": 85, "value": 60000000, "position": "AM", "team": "FC Barcelona"},
+    {"name": "Frenkie de Jong", "age": 28, "rating": 86, "value": 70000000, "position": "CM", "team": "FC Barcelona"},
+    {"name": "Marc Bernal", "age": 18, "rating": 72, "value": 8000000, "position": "DM", "team": "FC Barcelona"},
+    {"name": "Ferran Torres", "age": 25, "rating": 80, "value": 35000000, "position": "RW", "team": "FC Barcelona"},
+    {"name": "Robert Lewandowski", "age": 37, "rating": 87, "value": 15000000, "position": "ST", "team": "FC Barcelona"},
+    {"name": "Lamine Yamal", "age": 18, "rating": 85, "value": 180000000, "position": "RW", "team": "FC Barcelona"},
+    {"name": "Raphinha", "age": 28, "rating": 84, "value": 60000000, "position": "LW", "team": "FC Barcelona"},
+    {"name": "Marcus Rashford", "age": 27, "rating": 82, "value": 55000000, "position": "LW", "team": "FC Barcelona"},
+    {"name": "Roony Bardghji", "age": 19, "rating": 70, "value": 8000000, "position": "RW", "team": "FC Barcelona"},
+    
     # Real Madrid CF
     {"name": "Kylian Mbappé", "age": 26, "rating": 91, "value": 180000000, "position": "ST", "team": "Real Madrid CF"},
     {"name": "Vinícius Jr.", "age": 24, "rating": 89, "value": 150000000, "position": "LW", "team": "Real Madrid CF"},
