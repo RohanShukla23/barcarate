@@ -1,0 +1,544 @@
+/* Transfer Analysis Components */
+.analysis-container {
+    background: linear-gradient(135deg, rgba(0, 77, 152, 0.15), rgba(165, 0, 68, 0.08));
+    border-radius: 25px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+    border-left: 6px solid var(--accent);
+    border-top: 2px solid rgba(255, 203, 5, 0.3);
+    backdrop-filter: blur(20px);
+    position: relative;
+}
+
+.analysis-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 203, 5, 0.2), transparent);
+    border-radius: 0 25px 0 50px;
+}
+
+.rating-display {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.rating-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8px;
+    box-shadow: 
+        0 0 40px rgba(255, 203, 5, 0.4),
+        inset 0 0 0 4px rgba(0, 77, 152, 0.3);
+}
+
+.rating-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--card-bg), rgba(0, 77, 152, 0.1));
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 203, 5, 0.2);
+}
+
+.rating-score {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(255, 203, 5, 0.6);
+}
+
+.rating-label {
+    font-size: 0.9rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-top: 0.3rem;
+}
+
+.rating-max {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+    font-weight: 500;
+}
+
+/* Enhanced Recommendations with Barcelona DNA */
+.recommendation {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 2.5rem;
+    font-weight: 800;
+    font-size: 1.2rem;
+    border: 3px solid;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+}
+
+.recommendation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.recommendation.dream-signing {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 255, 136, 0.15));
+    border-color: var(--success);
+    color: var(--success);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.recommendation.excellent-target {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.1));
+    border-color: var(--success);
+    color: var(--success);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+}
+
+.recommendation.highly-recommended {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
+    border-color: var(--success);
+    color: var(--success);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.recommendation.recommended {
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.15), rgba(255, 203, 5, 0.08));
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px rgba(255, 203, 5, 0.3);
+}
+
+.recommendation.consider-carefully {
+    background: linear-gradient(135deg, rgba(255, 149, 0, 0.15), rgba(255, 149, 0, 0.08));
+    border-color: var(--warning);
+    color: var(--warning);
+    box-shadow: 0 0 20px rgba(255, 149, 0, 0.3);
+}
+
+.recommendation.questionable {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
+    border-color: var(--danger);
+    color: var(--danger);
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+}
+
+.recommendation.not-recommended {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(255, 71, 87, 0.1));
+    border-color: var(--danger);
+    color: var(--danger);
+    box-shadow: 0 0 25px rgba(255, 71, 87, 0.4);
+}
+
+.recommendation.invalid-transfer {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.25), rgba(255, 0, 0, 0.15));
+    border-color: #ff0000;
+    color: #ff0000;
+    animation: pulse-error 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-error {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); box-shadow: 0 0 40px rgba(255, 0, 0, 0.5); }
+}
+
+.analysis-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.breakdown-item {
+    background: linear-gradient(135deg, var(--surface), rgba(0, 77, 152, 0.1));
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.4s ease;
+    border: 2px solid rgba(255, 203, 5, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.breakdown-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--barca-gradient);
+    border-radius: 20px 20px 0 0;
+}
+
+.breakdown-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 15px 30px rgba(255, 203, 5, 0.3),
+        0 0 0 2px var(--accent);
+    border-color: var(--accent);
+}
+
+.breakdown-label {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+.breakdown-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(255, 203, 5, 0.4);
+}
+
+.breakdown-value.negative {
+    color: var(--danger);
+    text-shadow: 0 0 10px rgba(255, 71, 87, 0.4);
+}
+
+.breakdown-value.positive {
+    color: var(--success);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+.explanation-text {
+    background: linear-gradient(135deg, var(--surface), rgba(165, 0, 68, 0.05));
+    padding: 2.5rem;
+    border-radius: 20px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    border-left: 6px solid var(--accent);
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.explanation-text::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: var(--gold-gradient);
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.risk-factors {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
+    border: 3px solid var(--danger);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(15px);
+    position: relative;
+}
+
+.risk-factors::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--danger), transparent);
+    border-radius: 20px 20px 0 0;
+}
+
+.risk-title {
+    color: var(--danger);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
+}
+
+.risk-list {
+    list-style: none;
+}
+
+.risk-item {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.risk-item:hover {
+    color: var(--danger);
+}
+
+.risk-item::before {
+    content: '⚠️';
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+/* Squad Analysis Components */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, var(--surface), rgba(165, 0, 68, 0.05));
+    padding: 2.5rem;
+    border-radius: 25px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 2px solid rgba(255, 203, 5, 0.15);
+    backdrop-filter: blur(20px);
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--camp-nou-gradient);
+    border-radius: 25px 25px 0 0;
+}
+
+.metric-card::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(255, 203, 5, 0.2), transparent);
+    border-radius: 50%;
+}
+
+.metric-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 
+        var(--glow),
+        0 20px 40px rgba(0, 77, 152, 0.3);
+    border-color: var(--accent);
+}
+
+.metric-value {
+    font-size: 3rem;
+    font-weight: 900;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(255, 203, 5, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.weaknesses-list {
+    display: grid;
+    gap: 2rem;
+}
+
+.weakness-item {
+    background: linear-gradient(135deg, rgba(255, 149, 0, 0.12), rgba(255, 149, 0, 0.08));
+    border: 2px solid var(--warning);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+}
+
+.weakness-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 203, 5, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.weakness-item:hover::before {
+    left: 100%;
+}
+
+.weakness-item:hover {
+    transform: translateX(12px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(255, 149, 0, 0.4);
+    border-color: var(--accent);
+}
+
+.weakness-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--camp-nou-gradient);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.weakness-text {
+    color: var(--warning);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px rgba(255, 149, 0, 0.3);
+}
+
+.priority-positions {
+    background: linear-gradient(135deg, var(--surface), rgba(0, 77, 152, 0.1));
+    border-radius: 25px;
+    padding: 2.5rem;
+    margin-top: 2.5rem;
+    border: 2px solid rgba(255, 203, 5, 0.3);
+    backdrop-filter: blur(20px);
+    position: relative;
+}
+
+.priority-positions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--barca-gradient);
+    border-radius: 25px 25px 0 0;
+}
+
+.priority-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-shadow: 0 0 10px rgba(255, 203, 5, 0.3);
+}
+
+.priority-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.priority-tag {
+    background: var(--camp-nou-gradient);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(0, 77, 152, 0.4);
+    transition: all 0.4s ease;
+    border: 2px solid rgba(255, 203, 5, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.priority-tag:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 203, 5, 0.5);
+    background: var(--gold-gradient);
+    border-color: var(--accent);
+}
+
+/* Responsive design for analysis components */
+@media (max-width: 1200px) {
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .analysis-breakdown {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .rating-circle {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .rating-score {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .analysis-breakdown {
+        grid-template-columns: 1fr;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .priority-list {
+        flex-direction: column;
+    }
+}

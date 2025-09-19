@@ -1,0 +1,149 @@
+/* Player card components */
+.players-grid {
+    display: grid;
+    gap: 1.5rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.players-grid::-webkit-scrollbar {
+    width: 10px;
+}
+
+.players-grid::-webkit-scrollbar-track {
+    background: var(--surface);
+    border-radius: 5px;
+}
+
+.players-grid::-webkit-scrollbar-thumb {
+    background: var(--barca-gradient);
+    border-radius: 5px;
+}
+
+.players-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-gradient);
+}
+
+.player-card {
+    background: linear-gradient(135deg, rgba(0, 77, 152, 0.1), rgba(165, 0, 68, 0.05));
+    border: 2px solid rgba(255, 203, 5, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+}
+
+.player-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 203, 5, 0.15), rgba(0, 77, 152, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.player-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--barca-gradient);
+    border-radius: 20px 20px 0 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.player-card:hover::before {
+    left: 100%;
+}
+
+.player-card:hover::after {
+    transform: scaleX(1);
+}
+
+.player-card:hover {
+    transform: translateX(10px) translateY(-6px) scale(1.02);
+    border-color: var(--accent);
+    box-shadow: 
+        0 15px 40px rgba(255, 203, 5, 0.4),
+        0 8px 25px rgba(0, 77, 152, 0.3);
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.1), rgba(0, 77, 152, 0.08));
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.player-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(255, 203, 5, 0.3);
+}
+
+.player-rating {
+    background: var(--gold-gradient);
+    color: var(--barca-navy);
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1rem;
+    box-shadow: 
+        0 4px 15px rgba(255, 203, 5, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(0, 77, 152, 0.3);
+}
+
+.player-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.detail-item:hover {
+    color: var(--accent);
+}
+
+.detail-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+    filter: drop-shadow(0 0 5px rgba(255, 203, 5, 0.5));
+}
+
+/* World Class Player Card Enhancement */
+.player-card.world-class {
+    border-color: var(--success);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 77, 152, 0.05));
+}
+
+.player-card.elite {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.1), rgba(0, 77, 152, 0.05));
+}
+
+.player-card.quality {
+    border-color: var(--barca-light-blue);
+    background: linear-gradient(135deg, rgba(26, 102, 204, 0.1), rgba(0, 77, 152, 0.05));
+}
