@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarcaRate - FC Barcelona Transfer Analyzer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">BarcaRate</h1>
+            <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer</p>
+            <p class="motto">More than a club</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="glass-card full-width">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="section-title">Squad Analysis</h2>
+                </div>
+                <div id="squadAnalysis">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Analyzing squad composition for FC Barcelona...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h2 class="section-title">Player Search</h2>
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label class="form-label">Player Name</label>
+                            <input type="text" id="playerSearch" class="modern-input" placeholder="Search for the next Barça legend..." autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Position</label>
+                            <select id="positionFilter" class="modern-input">
+                                <option value="">All Positions</option>
+                                <option value="GK">Goalkeeper</option>
+                                <option value="CB">Center Back</option>
+                                <option value="LB">Left Back</option>
+                                <option value="RB">Right Back</option>
+                                <option value="DM">Defensive Mid</option>
+                                <option value="CM">Central Mid</option>
+                                <option value="AM">Attacking Mid</option>
+                                <option value="LW">Left Wing</option>
+                                <option value="RW">Right Wing</option>
+                                <option value="ST">Striker</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Max Age</label>
+                            <input type="number" id="maxAge" class="modern-input" placeholder="30" min="16" max="40">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Min Rating</label>
+                            <input type="number" id="minRating" class="modern-input" placeholder="75" min="60" max="95">
+                        </div>
+                        <button class="search-btn" onclick="searchPlayers()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="players-grid" id="playersList">
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <p>Search for players to discover the next Culé</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h2 class="section-title">Transfer Analysis</h2>
+                </div>
+                
+                <div id="transferAnalysis">
+                    <div class="empty-state">
+                        <div class="empty-icon">🎯</div>
+                        <p>Select a player to analyze their Barcelona DNA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barcelona motto -->
+    <div class="barca-motto">Visca el Barça! 💙❤️</div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

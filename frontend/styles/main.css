@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* FC Barcelona colors */
+    --barca-blue: #004d98;
+    --barca-red: #a50044;
+    --barca-yellow: #ffcb05;
+    --barca-navy: #001e33;
+    --barca-light-blue: #1a66cc;
+    --barca-burgundy: #7c2529;
+    
+    /* enhanced Barca theme */
+    --dark-bg: linear-gradient(135deg, #001122 0%, #002244 25%, #001e33 50%, #003366 75%, #004488 100%);
+    --card-bg: rgba(0, 77, 152, 0.08);
+    --surface: rgba(0, 77, 152, 0.12);
+    --text-primary: #ffffff;
+    --text-secondary: #b4c1d6;
+    --accent: var(--barca-yellow);
+    --success: #00ff88;
+    --warning: #ff9500;
+    --danger: #ff4757;
+    --glass-bg: rgba(255, 203, 5, 0.05);
+    --glass-border: rgba(255, 203, 5, 0.15);
+    --shadow: 0 8px 32px rgba(0, 77, 152, 0.4);
+    --glow: 0 0 30px rgba(255, 203, 5, 0.4);
+    
+    /* Barcelona gradients */
+    --barca-gradient: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
+    --barca-gradient-reverse: linear-gradient(135deg, var(--barca-red), var(--barca-blue));
+    --gold-gradient: linear-gradient(135deg, var(--barca-yellow), #ffa500);
+    --camp-nou-gradient: linear-gradient(135deg, var(--barca-navy), var(--barca-blue), var(--barca-burgundy));
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--dark-bg);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Camp Nou inspired background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at top, rgba(255, 203, 5, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at bottom left, rgba(165, 0, 68, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(0, 77, 152, 0.12) 0%, transparent 50%),
+        repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(255, 203, 5, 0.02) 100px, rgba(255, 203, 5, 0.02) 102px);
+    z-index: -2;
+}
+
+/* Barcelona crest pattern animation */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.03;
+    background-image: 
+        repeating-linear-gradient(45deg, 
+            var(--barca-blue) 0px, 
+            var(--barca-blue) 1px, 
+            transparent 1px, 
+            transparent 25px),
+        repeating-linear-gradient(-45deg, 
+            var(--barca-red) 0px, 
+            var(--barca-red) 1px, 
+            transparent 1px, 
+            transparent 25px);
+    animation: crest-slide 30s linear infinite;
+}
+
+@keyframes crest-slide {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(25px) translateY(25px); }
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* grid layout */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-grid {
+        gap: 2rem;
+    }
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeInBarca 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes fadeInBarca {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRightBarca 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes slideInRightBarca {
+    from {
+        opacity: 0;
+        transform: translateX(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* Barcelona motto */
+.barca-motto {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--camp-nou-gradient);
+    color: var(--accent);
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    z-index: 1000;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 203, 5, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 77, 152, 0.3);
+}
+
+.barca-motto:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(255, 203, 5, 0.5);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--barca-navy);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--camp-nou-gradient);
+    border-radius: 6px;
+    border: 2px solid var(--barca-navy);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-gradient);
+}
