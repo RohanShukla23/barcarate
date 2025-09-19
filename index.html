@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {
             margin: 0;
@@ -17,40 +17,68 @@
         }
 
         :root {
-            --primary-blue: #004d98;
-            --secondary-blue: #a50044;
-            --gold: #ffcb05;
-            --dark-bg: #0a0e1a;
-            --card-bg: #1a1f2e;
-            --surface: #252b3d;
+            /* FC Barcelona Official Colors */
+            --barca-blue: #004d98;
+            --barca-red: #a50044;
+            --barca-yellow: #ffcb05;
+            --barca-navy: #001e33;
+            --barca-light-blue: #1a66cc;
+            
+            /* Enhanced Barcelona Theme */
+            --dark-bg: linear-gradient(135deg, #001122 0%, #002244 25%, #001e33 50%, #003366 75%, #004488 100%);
+            --card-bg: rgba(0, 77, 152, 0.08);
+            --surface: rgba(0, 77, 152, 0.12);
             --text-primary: #ffffff;
-            --text-secondary: #b4bcd0;
-            --accent: #00d4ff;
+            --text-secondary: #b4c1d6;
+            --accent: var(--barca-yellow);
             --success: #00ff88;
-            --warning: #ffa500;
+            --warning: #ff9500;
             --danger: #ff4757;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --glow: 0 0 20px rgba(0, 212, 255, 0.3);
+            --glass-bg: rgba(255, 203, 5, 0.05);
+            --glass-border: rgba(255, 203, 5, 0.15);
+            --shadow: 0 8px 32px rgba(0, 77, 152, 0.4);
+            --glow: 0 0 30px rgba(255, 203, 5, 0.4);
+            
+            /* Barcelona Gradients */
+            --barca-gradient: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
+            --barca-gradient-reverse: linear-gradient(135deg, var(--barca-red), var(--barca-blue));
+            --gold-gradient: linear-gradient(135deg, var(--barca-yellow), #ffa500);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg), var(--primary-blue), var(--secondary-blue));
+            background: var(--dark-bg);
             background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Barcelona Stadium-inspired Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(255, 203, 5, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(165, 0, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(0, 77, 152, 0.1) 0%, transparent 50%);
+            z-index: -2;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Animated Background */
+        /* Animated Barcelona Crest Pattern */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -58,21 +86,24 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.1;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, 
+                    var(--barca-blue) 0px, 
+                    var(--barca-blue) 2px, 
+                    transparent 2px, 
+                    transparent 20px),
+                repeating-linear-gradient(-45deg, 
+                    var(--barca-red) 0px, 
+                    var(--barca-red) 2px, 
+                    transparent 2px, 
+                    transparent 20px);
+            animation: slide 20s linear infinite;
         }
 
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes slide {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(20px) translateY(20px); }
         }
 
         /* Header */
@@ -87,38 +118,69 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.1), transparent);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 203, 5, 0.2), rgba(0, 77, 152, 0.1), transparent);
             transform: translate(-50%, -50%);
             z-index: -1;
-            animation: pulse 3s ease-in-out infinite;
+            animation: pulse-barca 4s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        @keyframes pulse-barca {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
         }
 
         .logo {
-            font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-blue), var(--accent), var(--gold));
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            text-shadow: 0 0 40px rgba(255, 203, 5, 0.6);
+            position: relative;
+        }
+
+        .logo::before {
+            content: '🔵';
+            position: absolute;
+            left: -1.2em;
+            animation: rotate-crest 6s linear infinite;
+        }
+
+        .logo::after {
+            content: '🔴';
+            position: absolute;
+            right: -1.2em;
+            animation: rotate-crest 6s linear infinite reverse;
+        }
+
+        @keyframes rotate-crest {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            font-weight: 400;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--text-secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
             margin-bottom: 2rem;
         }
 
-        /* Glass morphism cards */
+        .motto {
+            font-size: 1rem;
+            color: var(--accent);
+            font-style: italic;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Glass morphism cards with Barcelona theme */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -126,7 +188,7 @@
             border-radius: 20px;
             padding: 2rem;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
         }
@@ -138,8 +200,12 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 203, 5, 0.1), 
+                rgba(0, 77, 152, 0.1),
+                transparent);
+            transition: left 0.6s ease;
         }
 
         .glass-card:hover::before {
@@ -147,8 +213,10 @@
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--glow);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                var(--glow),
+                0 20px 40px rgba(0, 77, 152, 0.3);
             border-color: var(--accent);
         }
 
@@ -156,7 +224,7 @@
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 2.5rem;
             margin-bottom: 2rem;
         }
 
@@ -173,122 +241,141 @@
         }
 
         .section-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--primary-blue));
-            border-radius: 15px;
+            width: 55px;
+            height: 55px;
+            background: var(--barca-gradient);
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: white;
+            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.4);
+            animation: icon-glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes icon-glow {
+            0% { box-shadow: 0 4px 15px rgba(0, 77, 152, 0.4); }
+            100% { box-shadow: 0 4px 25px rgba(255, 203, 5, 0.6); }
         }
 
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Advanced Search */
         .search-container {
             background: var(--surface);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 203, 5, 0.2);
         }
 
         .search-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr auto;
-            gap: 1rem;
+            gap: 1.2rem;
             align-items: end;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         .form-label {
             font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
+            font-weight: 600;
+            color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .modern-input {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 0.8rem 1rem;
+            background: rgba(0, 77, 152, 0.1);
+            border: 2px solid rgba(255, 203, 5, 0.2);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
             color: var(--text-primary);
             font-size: 1rem;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .modern-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
-            transform: translateY(-1px);
+            background: rgba(255, 203, 5, 0.05);
+            box-shadow: 0 0 0 4px rgba(255, 203, 5, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .modern-input::placeholder {
+            color: var(--text-secondary);
         }
 
         .search-btn {
-            background: linear-gradient(135deg, var(--accent), var(--primary-blue));
+            background: var(--barca-gradient);
             border: none;
-            border-radius: 10px;
-            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            padding: 1rem 2rem;
             color: white;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.4);
         }
 
         .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 203, 5, 0.5);
+            background: var(--gold-gradient);
         }
 
         .search-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px) scale(1.02);
         }
 
         /* Player Cards */
         .players-grid {
             display: grid;
-            gap: 1rem;
-            max-height: 500px;
+            gap: 1.2rem;
+            max-height: 550px;
             overflow-y: auto;
             padding-right: 1rem;
         }
 
         .players-grid::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         .players-grid::-webkit-scrollbar-track {
             background: var(--surface);
-            border-radius: 3px;
+            border-radius: 4px;
         }
 
         .players-grid::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 3px;
+            background: var(--barca-gradient);
+            border-radius: 4px;
         }
 
         .player-card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 1.2rem;
+            background: rgba(0, 77, 152, 0.08);
+            border: 2px solid rgba(255, 203, 5, 0.15);
+            border-radius: 18px;
+            padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
         }
@@ -300,8 +387,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-            transition: left 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 203, 5, 0.1), transparent);
+            transition: left 0.4s ease;
         }
 
         .player-card:hover::before {
@@ -309,37 +396,41 @@
         }
 
         .player-card:hover {
-            transform: translateX(5px);
+            transform: translateX(8px) translateY(-4px);
             border-color: var(--accent);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+            box-shadow: 
+                0 8px 25px rgba(255, 203, 5, 0.3),
+                0 4px 15px rgba(0, 77, 152, 0.2);
+            background: rgba(255, 203, 5, 0.05);
         }
 
         .player-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
 
         .player-name {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.15rem;
+            font-weight: 700;
             color: var(--text-primary);
         }
 
         .player-rating {
-            background: linear-gradient(135deg, var(--gold), #ffa500);
-            color: var(--dark-bg);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
+            background: var(--gold-gradient);
+            color: var(--barca-navy);
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 10px rgba(255, 203, 5, 0.4);
         }
 
         .player-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
+            gap: 0.8rem;
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
@@ -347,33 +438,35 @@
         .detail-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
+            font-weight: 500;
         }
 
         .detail-icon {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             color: var(--accent);
         }
 
         /* Transfer Analysis */
         .analysis-container {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            border-left: 4px solid var(--accent);
+            background: rgba(0, 77, 152, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border-left: 5px solid var(--accent);
+            border-top: 1px solid rgba(255, 203, 5, 0.2);
         }
 
         .rating-display {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             position: relative;
         }
 
         .rating-circle {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             margin: 0 auto;
             display: flex;
@@ -381,7 +474,8 @@
             justify-content: center;
             position: relative;
             background: conic-gradient(var(--success) 0deg, var(--success) calc(var(--rating) * 36deg), var(--surface) calc(var(--rating) * 36deg), var(--surface) 360deg);
-            padding: 5px;
+            padding: 6px;
+            box-shadow: 0 0 30px rgba(255, 203, 5, 0.3);
         }
 
         .rating-inner {
@@ -393,109 +487,123 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(10px);
         }
 
         .rating-score {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: 2.8rem;
+            font-weight: 900;
             color: var(--text-primary);
             line-height: 1;
         }
 
         .rating-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+            font-size: 0.85rem;
+            color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .recommendation {
             text-align: center;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid;
         }
 
-        .recommendation.exceptional-target {
+        .recommendation.dream-signing {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.1));
+            border-color: var(--success);
+            color: var(--success);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .recommendation.excellent-target {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
-            border: 1px solid var(--success);
+            border-color: var(--success);
             color: var(--success);
         }
 
         .recommendation.highly-recommended {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
-            border: 1px solid var(--success);
+            border-color: var(--success);
             color: var(--success);
         }
 
         .recommendation.recommended {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
-            border: 1px solid var(--accent);
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.1), rgba(255, 203, 5, 0.05));
+            border-color: var(--accent);
             color: var(--accent);
         }
 
         .recommendation.consider-carefully {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(255, 165, 0, 0.05));
-            border: 1px solid var(--warning);
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 149, 0, 0.05));
+            border-color: var(--warning);
             color: var(--warning);
         }
 
         .recommendation.questionable {
             background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
-            border: 1px solid var(--danger);
+            border-color: var(--danger);
             color: var(--danger);
         }
 
         .recommendation.not-recommended {
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
-            border: 1px solid var(--danger);
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
+            border-color: var(--danger);
             color: var(--danger);
         }
 
         .recommendation.invalid-transfer {
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.15), rgba(255, 0, 0, 0.08));
-            border: 2px solid #ff0000;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.1));
+            border-color: #ff0000;
             color: #ff0000;
-            animation: pulse-error 2s ease-in-out;
+            animation: pulse-error 2s ease-in-out infinite;
         }
 
         @keyframes pulse-error {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); }
         }
 
         .analysis-breakdown {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .breakdown-item {
             background: var(--surface);
-            padding: 1rem;
-            border-radius: 10px;
+            padding: 1.5rem;
+            border-radius: 15px;
             text-align: center;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 203, 5, 0.1);
         }
 
         .breakdown-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 203, 5, 0.2);
+            border-color: var(--accent);
         }
 
         .breakdown-label {
             font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .breakdown-value {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             color: var(--accent);
         }
 
@@ -509,27 +617,30 @@
 
         .explanation-text {
             background: var(--surface);
-            padding: 1.2rem;
-            border-radius: 10px;
-            line-height: 1.6;
+            padding: 1.8rem;
+            border-radius: 15px;
+            line-height: 1.7;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+            font-weight: 500;
         }
 
         .risk-factors {
             background: rgba(255, 71, 87, 0.1);
-            border: 1px solid var(--danger);
-            border-radius: 10px;
-            padding: 1rem;
+            border: 2px solid var(--danger);
+            border-radius: 15px;
+            padding: 1.5rem;
         }
 
         .risk-title {
             color: var(--danger);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            font-size: 1.1rem;
         }
 
         .risk-list {
@@ -538,34 +649,35 @@
 
         .risk-item {
             color: var(--text-secondary);
-            margin-bottom: 0.3rem;
-            padding-left: 1rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
             position: relative;
+            font-weight: 500;
         }
 
         .risk-item::before {
-            content: '⚠';
+            content: '⚠️';
             position: absolute;
             left: 0;
-            color: var(--danger);
         }
 
         /* Squad Analysis */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .metric-card {
             background: var(--surface);
-            padding: 1.5rem;
-            border-radius: 15px;
+            padding: 2rem;
+            border-radius: 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 203, 5, 0.1);
         }
 
         .metric-card::before {
@@ -574,100 +686,114 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--primary-blue));
+            height: 4px;
+            background: var(--barca-gradient);
         }
 
         .metric-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-8px);
             box-shadow: var(--glow);
+            border-color: var(--accent);
         }
 
         .metric-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--primary-blue));
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .metric-label {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .weaknesses-list {
             display: grid;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .weakness-item {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(255, 165, 0, 0.05));
-            border: 1px solid var(--warning);
-            border-radius: 10px;
-            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 149, 0, 0.05));
+            border: 2px solid var(--warning);
+            border-radius: 15px;
+            padding: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
             transition: all 0.3s ease;
         }
 
         .weakness-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 3px 15px rgba(255, 165, 0, 0.2);
+            transform: translateX(8px);
+            box-shadow: 0 5px 20px rgba(255, 149, 0, 0.3);
+            border-color: var(--accent);
         }
 
         .weakness-icon {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: var(--warning);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--dark-bg);
+            color: var(--barca-navy);
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .weakness-text {
             color: var(--warning);
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .priority-positions {
             background: var(--surface);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 203, 5, 0.2);
         }
 
         .priority-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: var(--accent);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
 
         .priority-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 1rem;
         }
 
         .priority-tag {
-            background: linear-gradient(135deg, var(--accent), var(--primary-blue));
+            background: var(--barca-gradient);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 77, 152, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .priority-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 203, 5, 0.4);
+            background: var(--gold-gradient);
         }
 
         /* Loading States */
@@ -676,18 +802,18 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 3rem;
+            padding: 4rem;
             color: var(--text-secondary);
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--surface);
-            border-top: 3px solid var(--accent);
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--surface);
+            border-top: 4px solid var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         @keyframes spin {
@@ -697,32 +823,71 @@
 
         /* Error States */
         .error {
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
-            border: 1px solid var(--danger);
-            border-radius: 10px;
-            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.08));
+            border: 2px solid var(--danger);
+            border-radius: 15px;
+            padding: 1.5rem;
             color: var(--danger);
             text-align: center;
+            font-weight: 600;
         }
 
         /* Empty States */
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem;
             color: var(--text-secondary);
         }
 
         .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.6;
+        }
+
+        /* Barcelona-themed success states */
+        .success-state {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
+            border: 2px solid var(--success);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--success);
         }
 
         /* Responsive Design */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .main-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .search-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .glass-card {
+                padding: 1.5rem;
             }
             
             .search-grid {
@@ -730,43 +895,39 @@
                 gap: 1rem;
             }
             
-            .metrics-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 1rem;
+            .analysis-breakdown {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .rating-circle {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .rating-score {
+                font-size: 2.2rem;
             }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .logo {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .glass-card {
-                padding: 1.5rem;
-            }
-            
+        @media (max-width: 480px) {
             .analysis-breakdown {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         /* Animations */
         .fade-in {
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -775,18 +936,56 @@
         }
 
         .slide-in-right {
-            animation: slideInRight 0.5s ease;
+            animation: slideInRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         @keyframes slideInRight {
             from {
                 opacity: 0;
-                transform: translateX(30px);
+                transform: translateX(40px);
             }
             to {
                 opacity: 1;
                 transform: translateX(0);
             }
+        }
+
+        /* Barcelona motto styling */
+        .barca-motto {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 77, 152, 0.9);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .barca-motto:hover {
+            opacity: 1;
+        }
+
+        /* Custom scrollbar for the entire page */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--barca-navy);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--barca-gradient);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-gradient);
         }
     </style>
 </head>
@@ -795,8 +994,9 @@
     
     <div class="container">
         <header class="header">
-            <h1 class="logo">🔵🔴 BarcaRate</h1>
-            <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer - Enhanced Rating System</p>
+            <h1 class="logo">BarcaRate</h1>
+            <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer</p>
+            <p class="motto">"Més que un club" - More than a club</p>
         </header>
 
         <div class="main-grid">
@@ -805,7 +1005,7 @@
                     <div class="section-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h2 class="section-title">Squad Analysis</h2>
+                    <h2 class="section-title">Anàlisi de la Plantilla</h2>
                 </div>
                 <div id="squadAnalysis">
                     <div class="loading">
@@ -822,37 +1022,37 @@
                     <div class="section-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <h2 class="section-title">Player Search</h2>
+                    <h2 class="section-title">Cerca de Jugadors</h2>
                 </div>
                 
                 <div class="search-container">
                     <div class="search-grid">
                         <div class="form-group">
-                            <label class="form-label">Player Name</label>
-                            <input type="text" id="playerSearch" class="modern-input" placeholder="Search players..." autocomplete="off">
+                            <label class="form-label">Nom del Jugador</label>
+                            <input type="text" id="playerSearch" class="modern-input" placeholder="Buscar jugadors..." autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Position</label>
+                            <label class="form-label">Posició</label>
                             <select id="positionFilter" class="modern-input">
-                                <option value="">All Positions</option>
-                                <option value="GK">Goalkeeper</option>
-                                <option value="CB">Center Back</option>
-                                <option value="LB">Left Back</option>
-                                <option value="RB">Right Back</option>
-                                <option value="DM">Defensive Mid</option>
-                                <option value="CM">Central Mid</option>
-                                <option value="AM">Attacking Mid</option>
-                                <option value="LW">Left Wing</option>
-                                <option value="RW">Right Wing</option>
-                                <option value="ST">Striker</option>
+                                <option value="">Totes les Posicions</option>
+                                <option value="GK">Porter</option>
+                                <option value="CB">Defensa Central</option>
+                                <option value="LB">Lateral Esquerre</option>
+                                <option value="RB">Lateral Dret</option>
+                                <option value="DM">Migcampista Defensiu</option>
+                                <option value="CM">Migcampista Central</option>
+                                <option value="AM">Migcampista Ofensiu</option>
+                                <option value="LW">Extrem Esquerre</option>
+                                <option value="RW">Extrem Dret</option>
+                                <option value="ST">Davanter</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Max Age</label>
+                            <label class="form-label">Edat Màxima</label>
                             <input type="number" id="maxAge" class="modern-input" placeholder="30" min="16" max="40">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Min Rating</label>
+                            <label class="form-label">Valoració Mín.</label>
                             <input type="number" id="minRating" class="modern-input" placeholder="75" min="60" max="95">
                         </div>
                         <button class="search-btn" onclick="searchPlayers()">
@@ -864,7 +1064,7 @@
                 <div class="players-grid" id="playersList">
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <p>Search for players to discover transfer opportunities</p>
+                        <p>Cerca jugadors per descobrir oportunitats de fitxatge</p>
                     </div>
                 </div>
             </div>
@@ -874,18 +1074,21 @@
                     <div class="section-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h2 class="section-title">Transfer Analysis</h2>
+                    <h2 class="section-title">Anàlisi de Fitxatge</h2>
                 </div>
                 
                 <div id="transferAnalysis">
                     <div class="empty-state">
                         <div class="empty-icon">🎯</div>
-                        <p>Select a player to see detailed transfer analysis</p>
+                        <p>Selecciona un jugador per veure l'anàlisi detallada</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Barcelona motto -->
+    <div class="barca-motto">Visca el Barça!</div>
 
     <script>
         let players = [];
@@ -925,23 +1128,23 @@
                     <div class="metrics-grid fade-in">
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.total_players}</div>
-                            <div class="metric-label">Squad Size</div>
+                            <div class="metric-label">Mida de la Plantilla</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.average_age}</div>
-                            <div class="metric-label">Average Age</div>
+                            <div class="metric-label">Edat Mitjana</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.average_rating}</div>
-                            <div class="metric-label">Average Rating</div>
+                            <div class="metric-label">Valoració Mitjana</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">€${(analysis.metrics.total_value / 1000000).toFixed(0)}M</div>
-                            <div class="metric-label">Total Value</div>
+                            <div class="metric-label">Valor Total</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.young_players}</div>
-                            <div class="metric-label">Young Players (&lt;23)</div>
+                            <div class="metric-label">Jugadors Joves (&lt;23)</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value">${analysis.metrics.veteran_players}</div>
@@ -955,7 +1158,7 @@
                         <div class="priority-positions">
                             <div class="priority-title">
                                 <i class="fas fa-target"></i>
-                                Transfer Priority Positions
+                                Posicions Prioritàries per Fitxar
                             </div>
                             <div class="priority-list">
                                 ${analysis.priority_positions.map(pos => `<div class="priority-tag">${pos}</div>`).join('')}
@@ -966,11 +1169,11 @@
 
                 if (analysis.weaknesses.length > 0) {
                     html += `
-                        <div class="section-header" style="margin-top: 2rem;">
+                        <div class="section-header" style="margin-top: 2.5rem;">
                             <div class="section-icon">
                                 <i class="fas fa-exclamation-triangle"></i>
                             </div>
-                            <h3 class="section-title">Areas for Improvement</h3>
+                            <h3 class="section-title">Àrees de Millora</h3>
                         </div>
                         <div class="weaknesses-list fade-in">
                     `;
@@ -1003,21 +1206,21 @@
                     html += '</div>';
                 } else {
                     html += `
-                        <div class="section-header" style="margin-top: 2rem;">
+                        <div class="section-header" style="margin-top: 2.5rem;">
                             <div class="section-icon" style="background: var(--success);">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <h3 class="section-title">Squad Status</h3>
+                            <h3 class="section-title">Estat de la Plantilla</h3>
                         </div>
-                        <div class="recommendation highly-recommended">
-                            ✅ Squad analysis shows no major weaknesses identified!
+                        <div class="success-state">
+                            ✅ L'anàlisi de la plantilla no mostra debilitats importants!
                         </div>
                     `;
                 }
 
                 document.getElementById('squadAnalysis').innerHTML = html;
             } catch (error) {
-                document.getElementById('squadAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error loading squad analysis</div>';
+                document.getElementById('squadAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error carregant l\'anàlisi de la plantilla</div>';
             }
         }
 
@@ -1031,7 +1234,7 @@
                 document.getElementById('playersList').innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🔍</div>
-                        <p>Enter search criteria to find players</p>
+                        <p>Introdueix criteris de cerca per trobar jugadors</p>
                     </div>
                 `;
                 return;
@@ -1041,7 +1244,7 @@
                 document.getElementById('playersList').innerHTML = `
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Searching players...</p>
+                        <p>Cercant jugadors...</p>
                     </div>
                 `;
                 
@@ -1055,7 +1258,7 @@
                 players = response.data;
                 displayPlayers(players);
             } catch (error) {
-                document.getElementById('playersList').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error searching players</div>';
+                document.getElementById('playersList').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error cercant jugadors</div>';
             }
         }
 
@@ -1066,7 +1269,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">😔</div>
-                        <p>No players found matching your criteria</p>
+                        <p>No s'han trobat jugadors que coincideixin amb els teus criteris</p>
                     </div>
                 `;
                 return;
@@ -1091,7 +1294,7 @@
                         <div class="player-header">
                             <div>
                                 <div class="player-name">${player.name}</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.3rem;">
                                     ${player.team}
                                 </div>
                             </div>
@@ -1104,7 +1307,7 @@
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-birthday-cake detail-icon"></i>
-                                <span>${player.age} years</span>
+                                <span>${player.age} anys</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-euro-sign detail-icon"></i>
@@ -1129,7 +1332,7 @@
                 document.getElementById('transferAnalysis').innerHTML = `
                     <div class="loading">
                         <div class="spinner"></div>
-                        <p>Analyzing transfer potential...</p>
+                        <p>Analitzant potencial de fitxatge...</p>
                     </div>
                 `;
                 
@@ -1147,7 +1350,7 @@
                         return;
                     }
                 }
-                document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analyzing transfer</div>';
+                document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analitzant el fitxatge</div>';
             }
         }
 
@@ -1163,9 +1366,9 @@
                         <strong><i class="fas fa-exclamation-circle"></i> Error:</strong> ${errorData.message}
                     </div>
                     
-                    <div style="text-align: center; padding: 1rem; background: var(--surface); border-radius: 10px; color: var(--text-secondary);">
+                    <div style="text-align: center; padding: 1.5rem; background: var(--surface); border-radius: 15px; color: var(--text-secondary);">
                         <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                        Try searching for players from other teams to analyze potential transfers.
+                        Prova de cercar jugadors d'altres equips per analitzar fitxatges potencials.
                     </div>
                 </div>
             `;
@@ -1190,8 +1393,8 @@
                         <div class="rating-circle" style="--rating: ${analysis.rating}; background: conic-gradient(${ratingColor} 0deg, ${ratingColor} calc(${analysis.rating} * 38deg), var(--surface) calc(${analysis.rating} * 38deg), var(--surface) 360deg);">
                             <div class="rating-inner">
                                 <div class="rating-score" style="color: ${ratingColor};">${analysis.rating}</div>
-                                <div class="rating-label">Transfer Rating</div>
-                                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.2rem;">Max: 9.5</div>
+                                <div class="rating-label">Valoració Fitxatge</div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.2rem;">Màx: 9.5</div>
                             </div>
                         </div>
                     </div>
@@ -1203,29 +1406,29 @@
                     
                     <div class="analysis-breakdown">
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Quality</div>
+                            <div class="breakdown-label">Qualitat</div>
                             <div class="breakdown-value ${analysis.breakdown.quality >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.quality >= 0 ? '+' : ''}${analysis.breakdown.quality}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Age Impact</div>
+                            <div class="breakdown-label">Impacte Edat</div>
                             <div class="breakdown-value ${analysis.breakdown.age_impact >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.age_impact >= 0 ? '+' : ''}${analysis.breakdown.age_impact}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Financial</div>
+                            <div class="breakdown-label">Financer</div>
                             <div class="breakdown-value ${analysis.breakdown.financial_risk >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.financial_risk >= 0 ? '+' : ''}${analysis.breakdown.financial_risk}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Position Need</div>
+                            <div class="breakdown-label">Necessitat Pos.</div>
                             <div class="breakdown-value ${analysis.breakdown.position_need >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.position_need >= 0 ? '+' : ''}${analysis.breakdown.position_need}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Special</div>
+                            <div class="breakdown-label">Especial</div>
                             <div class="breakdown-value ${analysis.breakdown.special_factors >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.special_factors >= 0 ? '+' : ''}${analysis.breakdown.special_factors}</div>
                         </div>
                     </div>
                     
                     <div class="explanation-text">
-                        <strong>Analysis:</strong> ${analysis.explanation}
+                        <strong>Anàlisi:</strong> ${analysis.explanation}
                     </div>
             `;
             
@@ -1234,7 +1437,7 @@
                     <div class="risk-factors">
                         <div class="risk-title">
                             <i class="fas fa-exclamation-triangle"></i>
-                            Risk Factors
+                            Factors de Risc
                         </div>
                         <ul class="risk-list">
                             ${analysis.risk_factors.map(risk => `<li class="risk-item">${risk}</li>`).join('')}
