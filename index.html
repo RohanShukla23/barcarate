@@ -417,6 +417,12 @@
             font-weight: 600;
         }
 
+        .recommendation.exceptional-target {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
         .recommendation.highly-recommended {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
             border: 1px solid var(--success);
@@ -429,16 +435,34 @@
             color: var(--accent);
         }
 
-        .recommendation.consider {
+        .recommendation.consider-carefully {
             background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(255, 165, 0, 0.05));
             border: 1px solid var(--warning);
             color: var(--warning);
+        }
+
+        .recommendation.questionable {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
+            border: 1px solid var(--danger);
+            color: var(--danger);
         }
 
         .recommendation.not-recommended {
             background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
             border: 1px solid var(--danger);
             color: var(--danger);
+        }
+
+        .recommendation.invalid-transfer {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.15), rgba(255, 0, 0, 0.08));
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            animation: pulse-error 2s ease-in-out;
+        }
+
+        @keyframes pulse-error {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         .analysis-breakdown {
@@ -473,6 +497,14 @@
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--accent);
+        }
+
+        .breakdown-value.negative {
+            color: var(--danger);
+        }
+
+        .breakdown-value.positive {
+            color: var(--success);
         }
 
         .explanation-text {
@@ -606,6 +638,38 @@
             font-weight: 500;
         }
 
+        .priority-positions {
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .priority-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .priority-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .priority-tag {
+            background: linear-gradient(135deg, var(--accent), var(--primary-blue));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
         /* Loading States */
         .loading {
             display: flex;
@@ -732,7 +796,7 @@
     <div class="container">
         <header class="header">
             <h1 class="logo">🔵🔴 BarcaRate</h1>
-            <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer</p>
+            <p class="subtitle">AI-Powered FC Barcelona Transfer Analyzer - Enhanced Rating System</p>
         </header>
 
         <div class="main-grid">
@@ -875,8 +939,30 @@
                             <div class="metric-value">€${(analysis.metrics.total_value / 1000000).toFixed(0)}M</div>
                             <div class="metric-label">Total Value</div>
                         </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${analysis.metrics.young_players}</div>
+                            <div class="metric-label">Young Players (&lt;23)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${analysis.metrics.veteran_players}</div>
+                            <div class="metric-label">Veterans (30+)</div>
+                        </div>
                     </div>
                 `;
+
+                if (analysis.priority_positions && analysis.priority_positions.length > 0) {
+                    html += `
+                        <div class="priority-positions">
+                            <div class="priority-title">
+                                <i class="fas fa-target"></i>
+                                Transfer Priority Positions
+                            </div>
+                            <div class="priority-list">
+                                ${analysis.priority_positions.map(pos => `<div class="priority-tag">${pos}</div>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
 
                 if (analysis.weaknesses.length > 0) {
                     html += `
@@ -891,12 +977,19 @@
                     
                     analysis.weaknesses.forEach(weakness => {
                         const icons = {
+                            'goalkeeper_quality': '🥅',
                             'goalkeeper_depth': '🥅',
                             'aging_squad': '👴',
+                            'critical_aging': '⏰',
                             'striker_depth': '⚽',
+                            'striker_aging': '⏳',
                             'cb_depth': '🛡️',
+                            'cb_future': '🔮',
                             'dm_depth': '🛡️',
-                            'defensive_quality': '⚠️'
+                            'dm_quality': '💎',
+                            'fullback_depth': '↔️',
+                            'defensive_quality': '⚠️',
+                            'midfield_quality': '⚠️'
                         };
                         
                         html += `
@@ -987,8 +1080,14 @@
                     'LW': '⬅️', 'RW': '➡️', 'ST': '⚽'
                 };
 
+                // Color code player cards based on their rating
+                let cardClass = 'player-card';
+                if (player.rating >= 90) cardClass += ' world-class';
+                else if (player.rating >= 85) cardClass += ' elite';
+                else if (player.rating >= 80) cardClass += ' quality';
+
                 html += `
-                    <div class="player-card fade-in" onclick="analyzeTransfer(${index})">
+                    <div class="${cardClass} fade-in" onclick="analyzeTransfer(${index})">
                         <div class="player-header">
                             <div>
                                 <div class="player-name">${player.name}</div>
@@ -1040,24 +1139,59 @@
                 
                 displayAnalysis(player, result.analysis);
             } catch (error) {
+                // Handle the case where player is already at Barcelona
+                if (error.response && error.response.status === 400) {
+                    const errorData = error.response.data;
+                    if (errorData.error) {
+                        displayErrorAnalysis(errorData);
+                        return;
+                    }
+                }
                 document.getElementById('transferAnalysis').innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error analyzing transfer</div>';
             }
         }
 
-        function displayAnalysis(player, analysis) {
-            const ratingColor = analysis.rating >= 8 ? 'var(--success)' : 
-                              analysis.rating >= 6.5 ? 'var(--accent)' : 
-                              analysis.rating >= 5 ? 'var(--warning)' : 'var(--danger)';
+        function displayErrorAnalysis(errorData) {
+            const html = `
+                <div class="analysis-container slide-in-right">
+                    <div class="recommendation invalid-transfer">
+                        <strong>${errorData.recommendation}</strong><br>
+                        <small>${errorData.recommendation_desc}</small>
+                    </div>
+                    
+                    <div class="explanation-text">
+                        <strong><i class="fas fa-exclamation-circle"></i> Error:</strong> ${errorData.message}
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1rem; background: var(--surface); border-radius: 10px; color: var(--text-secondary);">
+                        <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                        Try searching for players from other teams to analyze potential transfers.
+                    </div>
+                </div>
+            `;
             
-            const recommendationClass = analysis.recommendation.toLowerCase().replace(' ', '-');
+            document.getElementById('transferAnalysis').innerHTML = html;
+        }
+
+        function displayAnalysis(player, analysis) {
+            // Determine rating color based on new stringent scale
+            const ratingColor = analysis.rating >= 8.5 ? 'var(--success)' : 
+                              analysis.rating >= 7.5 ? '#00cc66' :
+                              analysis.rating >= 6.5 ? 'var(--accent)' : 
+                              analysis.rating >= 5.5 ? 'var(--warning)' : 
+                              analysis.rating >= 4.0 ? '#ff8c42' :
+                              'var(--danger)';
+            
+            const recommendationClass = analysis.recommendation.toLowerCase().replace(/ /g, '-');
             
             let html = `
                 <div class="analysis-container slide-in-right">
                     <div class="rating-display">
-                        <div class="rating-circle" style="--rating: ${analysis.rating};">
+                        <div class="rating-circle" style="--rating: ${analysis.rating}; background: conic-gradient(${ratingColor} 0deg, ${ratingColor} calc(${analysis.rating} * 38deg), var(--surface) calc(${analysis.rating} * 38deg), var(--surface) 360deg);">
                             <div class="rating-inner">
                                 <div class="rating-score" style="color: ${ratingColor};">${analysis.rating}</div>
                                 <div class="rating-label">Transfer Rating</div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.2rem;">Max: 9.5</div>
                             </div>
                         </div>
                     </div>
@@ -1070,23 +1204,23 @@
                     <div class="analysis-breakdown">
                         <div class="breakdown-item">
                             <div class="breakdown-label">Quality</div>
-                            <div class="breakdown-value">${analysis.breakdown.quality}</div>
+                            <div class="breakdown-value ${analysis.breakdown.quality >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.quality >= 0 ? '+' : ''}${analysis.breakdown.quality}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Age/Potential</div>
-                            <div class="breakdown-value">${analysis.breakdown.age_potential}</div>
+                            <div class="breakdown-label">Age Impact</div>
+                            <div class="breakdown-value ${analysis.breakdown.age_impact >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.age_impact >= 0 ? '+' : ''}${analysis.breakdown.age_impact}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Value</div>
-                            <div class="breakdown-value">${analysis.breakdown.value_efficiency}</div>
+                            <div class="breakdown-label">Financial</div>
+                            <div class="breakdown-value ${analysis.breakdown.financial_risk >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.financial_risk >= 0 ? '+' : ''}${analysis.breakdown.financial_risk}</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="breakdown-label">Need</div>
-                            <div class="breakdown-value">${analysis.breakdown.position_need}</div>
+                            <div class="breakdown-label">Position Need</div>
+                            <div class="breakdown-value ${analysis.breakdown.position_need >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.position_need >= 0 ? '+' : ''}${analysis.breakdown.position_need}</div>
                         </div>
                         <div class="breakdown-item">
                             <div class="breakdown-label">Special</div>
-                            <div class="breakdown-value">${analysis.breakdown.special_factors}</div>
+                            <div class="breakdown-value ${analysis.breakdown.special_factors >= 0 ? 'positive' : 'negative'}">${analysis.breakdown.special_factors >= 0 ? '+' : ''}${analysis.breakdown.special_factors}</div>
                         </div>
                     </div>
                     
