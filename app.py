@@ -119,7 +119,7 @@ class TransferAnalyzer:
         return weaknesses
     
     def calculate_position_redundancy(self, player_position: str, player_age: int) -> Tuple[float, str]:
-        """Calculate if we already have too many players in this position"""
+        """More balanced position redundancy calculation"""
         position_players = []
         for pos_group in CURRENT_SQUAD.values():
             position_players.extend([p for p in pos_group if p["position"] == player_position])
@@ -133,54 +133,54 @@ class TransferAnalyzer:
         redundancy_penalty = 0.0
         redundancy_desc = ""
         
-        # Position-specific redundancy rules
+        # Position-specific redundancy rules (less harsh)
         if player_position == "ST":
             if total_at_position >= 3:
-                redundancy_penalty = -1.5
-                redundancy_desc = "striker position overcrowded"
+                redundancy_penalty = -0.8  # Reduced from -1.5
+                redundancy_desc = "striker position well-stocked"
             elif total_at_position == 2 and player_age > 30:
-                redundancy_penalty = -0.8
-                redundancy_desc = "adding another aging striker"
+                redundancy_penalty = -0.4  # Reduced from -0.8
+                redundancy_desc = "aging striker depth consideration"
         
         elif player_position in ["LW", "RW"]:
             if total_at_position >= 4:
-                redundancy_penalty = -2.0
-                redundancy_desc = f"{player_position} position severely overcrowded"
+                redundancy_penalty = -1.2  # Reduced from -2.0
+                redundancy_desc = f"{player_position} position overcrowded"
             elif total_at_position >= 3:
-                redundancy_penalty = -1.0
-                redundancy_desc = f"too many {player_position} options already"
+                redundancy_penalty = -0.6  # Reduced from -1.0
+                redundancy_desc = f"good {player_position} depth already"
         
         elif player_position == "AM":
             if total_at_position >= 3:
-                redundancy_penalty = -1.5
-                redundancy_desc = "attacking midfield overcrowded"
+                redundancy_penalty = -0.8  # Reduced from -1.5
+                redundancy_desc = "attacking midfield well-supplied"
             elif total_at_position >= 2 and player_age > 28:
-                redundancy_penalty = -0.8
-                redundancy_desc = "adding aging attacking midfielder"
+                redundancy_penalty = -0.4  # Reduced from -0.8
+                redundancy_desc = "sufficient attacking midfield options"
         
         elif player_position == "CM":
             if total_at_position >= 5:
-                redundancy_penalty = -1.0
-                redundancy_desc = "central midfield overcrowded"
+                redundancy_penalty = -0.5  # Reduced from -1.0
+                redundancy_desc = "central midfield well-stocked"
         
         elif player_position == "CB":
             if total_at_position >= 5:
-                redundancy_penalty = -0.8
-                redundancy_desc = "center back depth already sufficient"
+                redundancy_penalty = -0.4  # Reduced from -0.8
+                redundancy_desc = "center back depth adequate"
         
         elif player_position in ["LB", "RB"]:
             if total_at_position >= 3:
-                redundancy_penalty = -1.2
-                redundancy_desc = f"sufficient {player_position} depth already"
+                redundancy_penalty = -0.6  # Reduced from -1.2
+                redundancy_desc = f"sufficient {player_position} coverage"
         
         elif player_position == "DM":
             if total_at_position >= 3:
-                redundancy_penalty = -0.5
-                redundancy_desc = "adequate defensive midfield depth"
+                redundancy_penalty = -0.3  # Reduced from -0.5
+                redundancy_desc = "defensive midfield depth adequate"
         
         elif player_position == "GK":
             if total_at_position >= 3:
-                redundancy_penalty = -2.0
+                redundancy_penalty = -1.5  # Reduced from -2.0
                 redundancy_desc = "goalkeeper position full"
         
         return redundancy_penalty, redundancy_desc
@@ -242,143 +242,156 @@ class TransferAnalyzer:
         return final_score, desc
     
     def analyze_player_age_impact(self, player: Dict) -> Tuple[float, str]:
-        """More stringent age analysis"""
+        """Balanced age analysis - rewarding exceptional talents appropriately"""
         age = player["age"]
         rating = player["rating"]
         
         # Exceptional young talents (under 20 with high rating)
         if age <= 19:
             if rating >= 85:
-                return 2.5, "generational talent - incredible potential"
+                return 3.0, "generational talent - incredible potential"
             elif rating >= 80:
-                return 2.0, "exceptional young prospect"
+                return 2.5, "exceptional young prospect"
             elif rating >= 75:
-                return 1.5, "promising youth with high potential"
+                return 2.0, "promising youth with high potential"
             else:
-                return 0.8, "developing talent for the future"
+                return 1.2, "developing talent for the future"
         
         # Prime development age (20-24)
         elif age <= 24:
-            if rating >= 88:
-                return 2.2, "world-class talent entering peak years"
-            elif rating >= 85:
-                return 1.8, "elite player in development phase"
-            elif rating >= 82:
-                return 1.4, "high-quality player approaching prime"
+            if rating >= 90:
+                return 2.8, "world-class superstar in prime development"
+            elif rating >= 87:
+                return 2.4, "elite talent entering absolute peak"
+            elif rating >= 84:
+                return 2.0, "top-tier player in development phase"
+            elif rating >= 81:
+                return 1.6, "high-quality player approaching prime"
             elif rating >= 78:
-                return 1.0, "solid prospect with room to grow"
+                return 1.2, "solid prospect with room to grow"
             else:
-                return 0.3, "average young player"
+                return 0.5, "average young player"
         
         # Peak years (25-28)
         elif age <= 28:
             if rating >= 90:
-                return 1.5, "world-class player in absolute prime"
+                return 2.2, "world-class player in absolute prime"
             elif rating >= 87:
-                return 1.2, "elite performer at peak"
+                return 1.8, "elite performer at peak"
             elif rating >= 84:
-                return 0.8, "quality player in prime years"
+                return 1.4, "quality player in prime years"
             elif rating >= 80:
-                return 0.4, "decent player at peak"
+                return 0.8, "decent player at peak"
             else:
-                return -0.2, "below Barcelona standards even at peak"
+                return 0.0, "below Barcelona standards even at peak"
         
         # Late peak/early decline (29-31)
         elif age <= 31:
             if rating >= 90:
-                return 0.5, "world-class veteran, short-term excellence"
+                return 1.0, "world-class veteran, still excellent"
             elif rating >= 87:
-                return 0.0, "elite player with limited years remaining"
+                return 0.6, "elite player with good years remaining"
             elif rating >= 84:
-                return -0.4, "quality player but aging concerns"
+                return 0.2, "quality player with some aging concerns"
             else:
-                return -1.0, "aging player below required standard"
+                return -0.6, "aging player below required standard"
         
         # Clear decline phase (32-34)
         elif age <= 34:
             if rating >= 90:
-                return -0.3, "legendary player but significant age concerns"
+                return 0.2, "legendary player but age concerns"
             elif rating >= 87:
-                return -0.8, "elite veteran with major decline risk"
+                return -0.4, "elite veteran with decline risk"
             elif rating >= 84:
-                return -1.5, "aging player, high risk investment"
+                return -1.0, "aging player, moderate risk investment"
             else:
-                return -2.0, "too old and not elite enough"
+                return -1.8, "too old and not elite enough"
         
         # Very old (35+)
         else:
             if rating >= 90:
-                return -1.0, "world-class but very short-term option"
+                return -0.5, "world-class but short-term option"
             elif rating >= 87:
-                return -1.8, "elite but extremely risky due to age"
+                return -1.2, "elite but risky due to age"
             else:
-                return -3.0, "too old for Barcelona's standards"
+                return -2.5, "too old for Barcelona's standards"
     
     def calculate_financial_risk(self, player: Dict) -> Tuple[float, str]:
-        """Enhanced financial risk assessment"""
+        """Balanced financial risk assessment"""
         value = player["value"]
         rating = player["rating"]
         age = player["age"]
         
         if value == 0:
-            return 2.0, "free transfer - exceptional financial value"
+            return 2.5, "free transfer - exceptional financial value"
         
-        # Risk categories based on transfer fee
+        # Risk categories based on transfer fee - more balanced
         if value >= self.financial_risk_thresholds['high_risk']:
-            base_penalty = -2.0
-            risk_desc = "extremely high financial commitment"
+            base_penalty = -1.5
+            risk_desc = "major financial investment"
             
-            # Only world-class players justify such fees
-            if rating >= 90 and age <= 26:
-                base_penalty = -0.5  # Reduced penalty for young superstars
-                risk_desc = "major investment in world-class talent"
-            elif rating >= 88 and age <= 24:
-                base_penalty = -1.0
-                risk_desc = "substantial but justified investment"
-            elif rating >= 85 and age <= 22:
-                base_penalty = -1.0
-                risk_desc = "significant investment in exceptional prospect"
+            # World-class players justify high fees
+            if rating >= 90 and age <= 28:
+                base_penalty = 0.0  # No penalty for young superstars
+                risk_desc = "premium investment in world-class talent"
+            elif rating >= 87 and age <= 26:
+                base_penalty = -0.3
+                risk_desc = "substantial but justified investment in elite talent"
+            elif rating >= 84 and age <= 24:
+                base_penalty = -0.6
+                risk_desc = "significant investment in high-potential player"
         
         elif value >= self.financial_risk_thresholds['medium_risk']:
-            base_penalty = -1.0
-            risk_desc = "significant financial outlay"
-            
-            if rating >= 85 and age <= 28:
-                base_penalty = -0.3
-                risk_desc = "reasonable investment for quality"
-            elif rating >= 82 and age <= 25:
-                base_penalty = -0.5
-                risk_desc = "moderate investment in talent"
-        
-        elif value >= self.financial_risk_thresholds['low_risk']:
-            base_penalty = -0.3
+            base_penalty = -0.6
             risk_desc = "moderate financial commitment"
             
-            if rating >= 80:
+            if rating >= 87 and age <= 30:
                 base_penalty = 0.2
-                risk_desc = "good value for proven quality"
+                risk_desc = "solid investment for elite quality"
+            elif rating >= 84 and age <= 28:
+                base_penalty = 0.0
+                risk_desc = "reasonable investment for proven quality"
+            elif rating >= 80 and age <= 25:
+                base_penalty = -0.2
+                risk_desc = "fair investment in developing talent"
+        
+        elif value >= self.financial_risk_thresholds['low_risk']:
+            base_penalty = -0.1
+            risk_desc = "reasonable financial commitment"
+            
+            if rating >= 82:
+                base_penalty = 0.6
+                risk_desc = "excellent value for proven quality"
+            elif rating >= 78:
+                base_penalty = 0.3
+                risk_desc = "good value for solid quality"
         
         else:
             # Under 20M
-            base_penalty = 0.8
+            base_penalty = 1.0
             risk_desc = "low financial risk"
             
-            if rating >= 80:
+            if rating >= 82:
+                base_penalty = 1.5
+                risk_desc = "outstanding value for money"
+            elif rating >= 78:
                 base_penalty = 1.2
-                risk_desc = "excellent value for money"
+                risk_desc = "excellent budget signing"
         
-        # Age-based financial risk adjustments
-        if age > 32:
-            base_penalty -= 0.8  # Additional penalty for aging expensive players
-            if "high risk" in risk_desc:
-                risk_desc += " with age-related concerns"
+        # Age-based financial risk adjustments (less harsh)
+        if age > 33:
+            base_penalty -= 0.6
+            if "premium" not in risk_desc and "substantial" not in risk_desc:
+                risk_desc += " with age concerns"
+        elif age > 30:
+            base_penalty -= 0.3
         
         # Rating vs value efficiency
         if value > 0:
             value_per_rating = value / max(rating, 1)
-            if value_per_rating > 1500000:  # More than 1.5M per rating point
-                base_penalty -= 0.5
-                if "reasonable" in risk_desc or "good" in risk_desc:
+            if value_per_rating > 1200000:  # More than 1.2M per rating point
+                base_penalty -= 0.3
+                if "excellent" in risk_desc or "outstanding" in risk_desc:
                     risk_desc = "overpriced for quality level"
         
         return base_penalty, risk_desc
@@ -439,31 +452,31 @@ class TransferAnalyzer:
                 "recommendation_desc": "Cannot transfer a player who is already in the squad"
             }
         
-        # Base quality assessment with higher standards
+        # Base quality assessment with balanced standards
         quality_score = 0.0
         quality_notes = []
         
         rating = player["rating"]
         if rating >= 90:
-            quality_score = 3.5  # Reduced from previous system
+            quality_score = 4.2  # Increased for superstars
             quality_notes.append("world-class elite talent")
         elif rating >= 87:
-            quality_score = 2.8
+            quality_score = 3.5  # Increased for top-tier players
             quality_notes.append("exceptional top-tier performer")
         elif rating >= 84:
-            quality_score = 2.0
+            quality_score = 2.8  # Increased
             quality_notes.append("high-quality proven player")
         elif rating >= 81:
-            quality_score = 1.2
+            quality_score = 2.0  # Increased
             quality_notes.append("solid professional above average")
         elif rating >= 78:
-            quality_score = 0.5
+            quality_score = 1.2  # Increased
             quality_notes.append("decent squad player")
         elif rating >= 75:
-            quality_score = -0.2
+            quality_score = 0.4  # Less harsh
             quality_notes.append("borderline Barcelona quality")
         else:
-            quality_score = -1.5
+            quality_score = -1.0  # Less harsh
             quality_notes.append("below Barcelona's required standards")
         
         # Age impact analysis
@@ -483,18 +496,19 @@ class TransferAnalyzer:
         # Calculate raw total
         raw_total = quality_score + age_score + financial_score + position_score + special_score
         
-        # Apply strict rating cap and scaling
-        # Scale to 1-9.5 range with much stricter distribution
-        if raw_total >= 6.0:
-            final_rating = min(9.5, 8.5 + (raw_total - 6.0) * 0.2)  # Very hard to get above 9.0
-        elif raw_total >= 4.0:
-            final_rating = 7.0 + (raw_total - 4.0) * 0.75
-        elif raw_total >= 2.0:
-            final_rating = 5.5 + (raw_total - 2.0) * 0.75
+        # Apply balanced rating cap and scaling - more generous for top players
+        if raw_total >= 7.0:
+            final_rating = min(9.5, 8.8 + (raw_total - 7.0) * 0.35)  # Easier to reach high ratings
+        elif raw_total >= 5.0:
+            final_rating = 7.5 + (raw_total - 5.0) * 0.65  # More generous scaling
+        elif raw_total >= 3.0:
+            final_rating = 6.0 + (raw_total - 3.0) * 0.75
+        elif raw_total >= 1.0:
+            final_rating = 4.5 + (raw_total - 1.0) * 0.75
         elif raw_total >= 0.0:
-            final_rating = 4.0 + (raw_total * 0.75)
+            final_rating = 3.5 + (raw_total * 1.0)
         else:
-            final_rating = max(1.0, 4.0 + raw_total * 0.5)
+            final_rating = max(1.0, 3.5 + raw_total * 0.7)
         
         final_rating = round(final_rating, 1)
         
@@ -536,22 +550,25 @@ class TransferAnalyzer:
         if player.get("team") and not any(la_liga_team in player["team"] for la_liga_team in ["Real Madrid", "Barcelona", "Atletico", "Sevilla", "Valencia", "Villarreal", "Real Sociedad", "Athletic Bilbao", "Real Betis", "Celta", "Getafe", "Osasuna", "Las Palmas", "Rayo", "Mallorca", "Girona", "Alaves", "Espanyol", "Leganes", "Valladolid"]):
             risk_factors.append("adaptation to La Liga style and pace required")
         
-        # Final recommendation with stricter thresholds
-        if final_rating >= 8.5:
-            recommendation = "Exceptional Target"
-            recommendation_desc = "Outstanding signing that transforms the squad"
-        elif final_rating >= 7.5:
+        # Final recommendation with balanced thresholds
+        if final_rating >= 9.0:
+            recommendation = "Dream Signing"
+            recommendation_desc = "Exceptional talent that would transform the squad"
+        elif final_rating >= 8.5:
+            recommendation = "Excellent Target"
+            recommendation_desc = "Outstanding signing addressing key needs perfectly"
+        elif final_rating >= 8.0:
             recommendation = "Highly Recommended"
-            recommendation_desc = "Excellent addition addressing key needs"
-        elif final_rating >= 6.5:
+            recommendation_desc = "Top-quality addition with significant impact"
+        elif final_rating >= 7.0:
             recommendation = "Recommended"
             recommendation_desc = "Good signing with clear benefits"
-        elif final_rating >= 5.5:
+        elif final_rating >= 6.0:
             recommendation = "Consider Carefully"
-            recommendation_desc = "Decent option but with notable limitations"
-        elif final_rating >= 4.0:
+            recommendation_desc = "Decent option with some limitations"
+        elif final_rating >= 4.5:
             recommendation = "Questionable"
-            recommendation_desc = "Marginal improvement with significant concerns"
+            recommendation_desc = "Limited improvement with notable concerns"
         else:
             recommendation = "Not Recommended"
             recommendation_desc = "Does not meet Barcelona's standards or needs"
