@@ -12,7 +12,7 @@ transfer analysis for barca. because every culé deserves to know if that 100m s
 ## quick start
 
 ```bash
-git clone https://github.com/yourusername/barca-rate.git
+git clone https://github.com/RohanShukla23/barca-rate.git
 cd barca-rate
 pip install -r requirements.txt
 python app.py
