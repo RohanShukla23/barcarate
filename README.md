@@ -6,13 +6,13 @@ transfer analysis for barca. because every culé deserves to know if that 100m s
 
 - analyzes barcelona's current squad for weaknesses
 - searches la liga players with smart filtering  
-- rates potential transfers with barcelona dna compatibility (yes, that's a real thing)
+- rates potential transfers with barcelona compatibility
 - gives you the harsh truth about why signing another aging galáctico might not be brilliant
 
 ## quick start
 
 ```bash
-git clone https://github.com/RohanShukla23/barca-rate.git
+git clone https://github.com/RohanShukla23/barcarate.git
 cd barcarate
 pip install -r requirements.txt
 python app.py
